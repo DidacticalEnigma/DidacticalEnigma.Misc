@@ -1,0 +1,201 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "DidacticalEnigma.Mem",
+    "version": "v1"
+  },
+  "paths": {
+    "/mem/projects": {
+      "post": {
+        "tags": [
+          "Mem"
+        ],
+        "operationId": "AddProject",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "projectName",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/mem/translations": {
+      "post": {
+        "tags": [
+          "Mem"
+        ],
+        "operationId": "Add",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "projectName",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/AddTranslations"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AddTranslationResult"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Mem"
+        ],
+        "operationId": "Query",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "projectName",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "correlationId",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/QueryResult"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AddContext": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "content": {
+          "format": "byte",
+          "type": "string"
+        },
+        "mediaType": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "AddTranslation": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "correlationId": {
+          "type": "string"
+        },
+        "context": {
+          "format": "uuid",
+          "type": "string"
+        }
+      }
+    },
+    "AddTranslations": {
+      "type": "object",
+      "properties": {
+        "contexts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AddContext"
+          }
+        },
+        "translations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AddTranslation"
+          }
+        }
+      }
+    },
+    "AddTranslationResult": {
+      "type": "object"
+    },
+    "QueryTranslationResult": {
+      "type": "object",
+      "properties": {
+        "projectName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "source": {
+          "type": "string",
+          "readOnly": true
+        },
+        "target": {
+          "type": "string",
+          "readOnly": true
+        },
+        "highlighterSequence": {
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "QueryResult": {
+      "type": "object",
+      "properties": {
+        "translations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QueryTranslationResult"
+          },
+          "readOnly": true
+        }
+      }
+    }
+  }
+}

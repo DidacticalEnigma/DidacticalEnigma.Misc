@@ -22,13 +22,14 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
         /// <summary>
         /// Initializes a new instance of the QueryTranslationResult class.
         /// </summary>
-        public QueryTranslationResult(string projectName = default(string), string source = default(string), string target = default(string), string highlighterSequence = default(string), string correlationId = default(string))
+        public QueryTranslationResult(string projectName = default(string), string source = default(string), string target = default(string), string highlighterSequence = default(string), string correlationId = default(string), System.Guid? context = default(System.Guid?))
         {
             ProjectName = projectName;
             Source = source;
             Target = target;
             HighlighterSequence = highlighterSequence;
             CorrelationId = correlationId;
+            Context = context;
             CustomInit();
         }
 
@@ -61,6 +62,11 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
         /// </summary>
         [JsonProperty(PropertyName = "correlationId")]
         public string CorrelationId { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "context")]
+        public System.Guid? Context { get; private set; }
 
     }
 }

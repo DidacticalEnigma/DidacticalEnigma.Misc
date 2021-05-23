@@ -11,6 +11,11 @@
           "Mem"
         ],
         "operationId": "AddProject",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -20,7 +25,36 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AddProjectResult"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Mem"
+        ],
+        "operationId": "DeleteProject",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "projectName",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/DeleteProjectResult"
+            }
           }
         }
       }
@@ -30,7 +64,7 @@
         "tags": [
           "Mem"
         ],
-        "operationId": "Add",
+        "operationId": "AddTranslations",
         "consumes": [
           "application/json",
           "text/json",
@@ -51,7 +85,7 @@
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/AddTranslations"
+              "$ref": "#/definitions/AddTranslationsParams"
             }
           }
         ],
@@ -59,7 +93,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/AddTranslationResult"
+              "$ref": "#/definitions/AddTranslationsResult"
             }
           }
         }
@@ -99,30 +133,137 @@
             }
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Mem"
+        ],
+        "operationId": "DeleteTranslation",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "projectName",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "correlationId",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/DeleteTranslationResult"
+            }
+          }
+        }
+      }
+    },
+    "/mem/contexts": {
+      "post": {
+        "tags": [
+          "Mem"
+        ],
+        "operationId": "AddContexts",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/AddContextsParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AddContextsResult"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Mem"
+        ],
+        "operationId": "GetContext",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/QueryContextResult"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Mem"
+        ],
+        "operationId": "DeleteContext",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/DeleteContextResult"
+            }
+          }
+        }
       }
     }
   },
   "definitions": {
-    "AddContext": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "uuid",
-          "type": "string"
-        },
-        "content": {
-          "format": "byte",
-          "type": "string"
-        },
-        "mediaType": {
-          "type": "string"
-        },
-        "text": {
-          "type": "string"
-        }
-      }
+    "AddProjectResult": {
+      "type": "object"
     },
-    "AddTranslation": {
+    "DeleteProjectResult": {
+      "type": "object"
+    },
+    "AddTranslationParams": {
       "type": "object",
       "properties": {
         "source": {
@@ -140,24 +281,18 @@
         }
       }
     },
-    "AddTranslations": {
+    "AddTranslationsParams": {
       "type": "object",
       "properties": {
-        "contexts": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/AddContext"
-          }
-        },
         "translations": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/AddTranslation"
+            "$ref": "#/definitions/AddTranslationParams"
           }
         }
       }
     },
-    "AddTranslationResult": {
+    "AddTranslationsResult": {
       "type": "object"
     },
     "QueryTranslationResult": {
@@ -182,6 +317,11 @@
         "correlationId": {
           "type": "string",
           "readOnly": true
+        },
+        "context": {
+          "format": "uuid",
+          "type": "string",
+          "readOnly": true
         }
       }
     },
@@ -196,6 +336,60 @@
           "readOnly": true
         }
       }
+    },
+    "DeleteTranslationResult": {
+      "type": "object"
+    },
+    "AddContextParams": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "content": {
+          "format": "byte",
+          "type": "string"
+        },
+        "mediaType": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "AddContextsParams": {
+      "type": "object",
+      "properties": {
+        "contexts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AddContextParams"
+          }
+        }
+      }
+    },
+    "AddContextsResult": {
+      "type": "object"
+    },
+    "QueryContextResult": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "content": {
+          "format": "byte",
+          "type": "string"
+        },
+        "mediaType": {
+          "type": "string"
+        }
+      }
+    },
+    "DeleteContextResult": {
+      "type": "object"
     }
   }
 }

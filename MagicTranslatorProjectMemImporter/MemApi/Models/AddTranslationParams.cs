@@ -9,20 +9,20 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class AddTranslation
+    public partial class AddTranslationParams
     {
         /// <summary>
-        /// Initializes a new instance of the AddTranslation class.
+        /// Initializes a new instance of the AddTranslationParams class.
         /// </summary>
-        public AddTranslation()
+        public AddTranslationParams()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AddTranslation class.
+        /// Initializes a new instance of the AddTranslationParams class.
         /// </summary>
-        public AddTranslation(string source = default(string), string target = default(string), string correlationId = default(string), System.Guid? context = default(System.Guid?))
+        public AddTranslationParams(string source = default(string), string target = default(string), string correlationId = default(string), System.Guid? context = default(System.Guid?))
         {
             Source = source;
             Target = target;

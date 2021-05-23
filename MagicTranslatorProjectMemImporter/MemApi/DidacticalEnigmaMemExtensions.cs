@@ -20,9 +20,9 @@ namespace MagicTranslatorProjectMemImporter.MemApi
             /// </param>
             /// <param name='projectName'>
             /// </param>
-            public static void AddProject(this IDidacticalEnigmaMem operations, string projectName = default(string))
+            public static object AddProject(this IDidacticalEnigmaMem operations, string projectName = default(string))
             {
-                operations.AddProjectAsync(projectName).GetAwaiter().GetResult();
+                return operations.AddProjectAsync(projectName).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -33,9 +33,38 @@ namespace MagicTranslatorProjectMemImporter.MemApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AddProjectAsync(this IDidacticalEnigmaMem operations, string projectName = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> AddProjectAsync(this IDidacticalEnigmaMem operations, string projectName = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.AddProjectWithHttpMessagesAsync(projectName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.AddProjectWithHttpMessagesAsync(projectName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectName'>
+            /// </param>
+            public static object DeleteProject(this IDidacticalEnigmaMem operations, string projectName = default(string))
+            {
+                return operations.DeleteProjectAsync(projectName).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> DeleteProjectAsync(this IDidacticalEnigmaMem operations, string projectName = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeleteProjectWithHttpMessagesAsync(projectName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <param name='operations'>
@@ -45,9 +74,9 @@ namespace MagicTranslatorProjectMemImporter.MemApi
             /// </param>
             /// <param name='body'>
             /// </param>
-            public static object Add(this IDidacticalEnigmaMem operations, string projectName = default(string), AddTranslations body = default(AddTranslations))
+            public static object AddTranslations(this IDidacticalEnigmaMem operations, string projectName = default(string), AddTranslationsParams body = default(AddTranslationsParams))
             {
-                return operations.AddAsync(projectName, body).GetAwaiter().GetResult();
+                return operations.AddTranslationsAsync(projectName, body).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -60,9 +89,9 @@ namespace MagicTranslatorProjectMemImporter.MemApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> AddAsync(this IDidacticalEnigmaMem operations, string projectName = default(string), AddTranslations body = default(AddTranslations), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> AddTranslationsAsync(this IDidacticalEnigmaMem operations, string projectName = default(string), AddTranslationsParams body = default(AddTranslationsParams), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddWithHttpMessagesAsync(projectName, body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddTranslationsWithHttpMessagesAsync(projectName, body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -97,6 +126,114 @@ namespace MagicTranslatorProjectMemImporter.MemApi
             public static async Task<QueryResult> QueryAsync(this IDidacticalEnigmaMem operations, string projectName = default(string), string correlationId = default(string), string query = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.QueryWithHttpMessagesAsync(projectName, correlationId, query, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectName'>
+            /// </param>
+            /// <param name='correlationId'>
+            /// </param>
+            public static object DeleteTranslation(this IDidacticalEnigmaMem operations, string projectName = default(string), string correlationId = default(string))
+            {
+                return operations.DeleteTranslationAsync(projectName, correlationId).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectName'>
+            /// </param>
+            /// <param name='correlationId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> DeleteTranslationAsync(this IDidacticalEnigmaMem operations, string projectName = default(string), string correlationId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeleteTranslationWithHttpMessagesAsync(projectName, correlationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            public static object AddContexts(this IDidacticalEnigmaMem operations, AddContextsParams body = default(AddContextsParams))
+            {
+                return operations.AddContextsAsync(body).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> AddContextsAsync(this IDidacticalEnigmaMem operations, AddContextsParams body = default(AddContextsParams), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AddContextsWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static QueryContextResult GetContext(this IDidacticalEnigmaMem operations, System.Guid? id = default(System.Guid?))
+            {
+                return operations.GetContextAsync(id).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<QueryContextResult> GetContextAsync(this IDidacticalEnigmaMem operations, System.Guid? id = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetContextWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static object DeleteContext(this IDidacticalEnigmaMem operations, System.Guid? id = default(System.Guid?))
+            {
+                return operations.DeleteContextAsync(id).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> DeleteContextAsync(this IDidacticalEnigmaMem operations, System.Guid? id = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeleteContextWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

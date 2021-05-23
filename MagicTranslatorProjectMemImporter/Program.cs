@@ -31,7 +31,7 @@ namespace MagicTranslatorProjectMemImporter
                     {
                         foreach (var page in chapter.Children.OfType<PageContext>())
                         {
-                            var translations = new List<AddTranslation>();
+                            var translations = new List<AddTranslationParams>();
                             foreach (var capture in page.Children)
                             {
                                 bool isNewImage = imagePaths.TryAdd(page.PathToRaw, Guid.NewGuid());
@@ -45,16 +45,16 @@ namespace MagicTranslatorProjectMemImporter
                                     });
                                         
                                     img.SaveAsPng(memoryStream);
-                                    api.Add(projectName, new AddTranslations()
+                                    api.AddContexts(new AddContextsParams()
                                     {
-                                        Contexts = new List<AddContext>()
+                                        Contexts = new List<AddContextParams>()
                                         {
-                                            new AddContext(imagePaths[page.PathToRaw], memoryStream.ToArray(),
+                                            new AddContextParams(imagePaths[page.PathToRaw], memoryStream.ToArray(),
                                                 "image/png", page.ShortDescription)
                                         }
                                     });
                                 }
-                                translations.Add(new AddTranslation()
+                                translations.Add(new AddTranslationParams()
                                 {
                                     Context = imagePaths[page.PathToRaw],
                                     CorrelationId = capture.ShortDescription + " " + Guid.NewGuid().ToString(),
@@ -63,7 +63,7 @@ namespace MagicTranslatorProjectMemImporter
                                 });
                             }
 
-                            api.Add(projectName, new AddTranslations()
+                            api.AddTranslations(projectName, new AddTranslationsParams()
                             {
                                 Translations = translations
                             });

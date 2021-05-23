@@ -9,20 +9,20 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class AddContext
+    public partial class AddContextParams
     {
         /// <summary>
-        /// Initializes a new instance of the AddContext class.
+        /// Initializes a new instance of the AddContextParams class.
         /// </summary>
-        public AddContext()
+        public AddContextParams()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AddContext class.
+        /// Initializes a new instance of the AddContextParams class.
         /// </summary>
-        public AddContext(System.Guid? id = default(System.Guid?), byte[] content = default(byte[]), string mediaType = default(string), string text = default(string))
+        public AddContextParams(System.Guid? id = default(System.Guid?), byte[] content = default(byte[]), string mediaType = default(string), string text = default(string))
         {
             Id = id;
             Content = content;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using DidacticalEnigma.Project;
 using MagicTranslatorProject.Context;
 using MagicTranslatorProjectMemImporter.MemApi;
@@ -19,9 +20,13 @@ namespace MagicTranslatorProjectMemImporter
             var projectName = args[1];
             var address = args[2];
 
+            Console.WriteLine("Supply an access token (just the token, don't prefix it with \"Bearer\"):");
+            var token = Console.ReadLine();
+
             var imagePaths = new Dictionary<string, Guid>();
             
             var api = new DidacticalEnigmaMem(new Uri(address));
+            api.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             if (MagicTranslatorProject.MagicTranslatorProject.Registration.TryOpen(projectPath, out var project, out var failureReason))
             {

@@ -1,13 +1,12 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using JDict;
-using JDict.Xml;
 
 namespace DidacticalEnigma.Updater
 {
-    public class JMDictUpdaterProcess : JDictUpdaterProcess
+    public class JMNedictUpdaterProcess : JDictUpdaterProcess
     {
-        public JMDictUpdaterProcess(
+        public JMNedictUpdaterProcess(
             HttpClient httpClient,
             string url,
             string oldPath,
@@ -15,7 +14,7 @@ namespace DidacticalEnigma.Updater
             string newPath,
             string newCachePath,
             string testedSchemaPath = null) : base(
-            "JMDict",
+            "JMNedict",
             httpClient,
             url,
             oldPath,
@@ -28,7 +27,7 @@ namespace DidacticalEnigma.Updater
 
         protected override async Task CreateCache()
         {
-            using (var jmdictLookup = await JMDictLookup.CreateAsync(newPath, newCachePath))
+            using (var jmdictLookup = await Jnedict.CreateAsync(newPath, newCachePath))
             {
 
             }

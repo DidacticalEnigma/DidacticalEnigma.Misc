@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 
 namespace DidacticalEnigma.Updater
 {
@@ -30,10 +31,13 @@ namespace DidacticalEnigma.Updater
         public class FailureStatus : UpdateStatus
         {
             public string Reason { get; }
+            
+            [CanBeNull] public string LongMessage { get; }
 
-            public FailureStatus(string reason)
+            public FailureStatus(string reason, string longMessage = null)
             {
                 Reason = reason;
+                LongMessage = longMessage;
             }
         }
     }

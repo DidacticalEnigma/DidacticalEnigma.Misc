@@ -28,6 +28,7 @@ namespace DidacticalEnigma.Updater
                     if (xmlReader.NodeType == XmlNodeType.DocumentType)
                     {
                         return dtdDirectiveRegex.Matches(xmlReader.Value)
+                            .Cast<Match>()
                             .Select(m => m.Groups[0].Value)
                             .ToList();
                     }

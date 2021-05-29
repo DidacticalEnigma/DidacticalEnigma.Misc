@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicTranslatorProjectMemIm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DidacticalEnigma.Updater", "DidacticalEnigma.Updater\DidacticalEnigma.Updater.csproj", "{CBFB0E52-EAE9-4BB9-8AEF-2FC839E99711}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DidacticalEnigma.Updater.CLI", "DidacticalEnigma.Updater.CLI\DidacticalEnigma.Updater.CLI.csproj", "{762572D7-CE00-4ACC-8558-3D4A5BA81DBA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,5 +102,17 @@ Global
 		{CBFB0E52-EAE9-4BB9-8AEF-2FC839E99711}.Release|x64.Build.0 = Release|Any CPU
 		{CBFB0E52-EAE9-4BB9-8AEF-2FC839E99711}.Release|x86.ActiveCfg = Release|Any CPU
 		{CBFB0E52-EAE9-4BB9-8AEF-2FC839E99711}.Release|x86.Build.0 = Release|Any CPU
+		{762572D7-CE00-4ACC-8558-3D4A5BA81DBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{762572D7-CE00-4ACC-8558-3D4A5BA81DBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{762572D7-CE00-4ACC-8558-3D4A5BA81DBA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{762572D7-CE00-4ACC-8558-3D4A5BA81DBA}.Debug|x64.Build.0 = Debug|Any CPU
+		{762572D7-CE00-4ACC-8558-3D4A5BA81DBA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{762572D7-CE00-4ACC-8558-3D4A5BA81DBA}.Debug|x86.Build.0 = Debug|Any CPU
+		{762572D7-CE00-4ACC-8558-3D4A5BA81DBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{762572D7-CE00-4ACC-8558-3D4A5BA81DBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{762572D7-CE00-4ACC-8558-3D4A5BA81DBA}.Release|x64.ActiveCfg = Release|Any CPU
+		{762572D7-CE00-4ACC-8558-3D4A5BA81DBA}.Release|x64.Build.0 = Release|Any CPU
+		{762572D7-CE00-4ACC-8558-3D4A5BA81DBA}.Release|x86.ActiveCfg = Release|Any CPU
+		{762572D7-CE00-4ACC-8558-3D4A5BA81DBA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

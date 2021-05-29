@@ -27,8 +27,8 @@ namespace DidacticalEnigma.Updater
             IReadOnlyList<string> inputNew)
         {
             return new DiffResult<string>(
-                inputNew.Except(inputOld).ToList(),
-                inputOld.Except(inputNew).ToList());
+                inputOld.Except(inputNew).ToList(),
+                inputNew.Except(inputOld).ToList());
         }
     }
 }

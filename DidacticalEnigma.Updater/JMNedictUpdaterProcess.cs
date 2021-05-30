@@ -27,7 +27,7 @@ namespace DidacticalEnigma.Updater
 
         protected override async Task CreateCache()
         {
-            using (var jmdictLookup = await Jnedict.CreateAsync(newPath, newCachePath))
+            using (var jmdictLookup = await JMNedictLookup.CreateAsync(newPath, newCachePath))
             {
 
             }

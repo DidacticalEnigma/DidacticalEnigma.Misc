@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DidacticalEnigma.Core" Version="0.9.6.3" />
+    <PackageReference Include="DidacticalEnigma.Core" Version="0.9.6.9" />
   </ItemGroup>
 
 </Project>

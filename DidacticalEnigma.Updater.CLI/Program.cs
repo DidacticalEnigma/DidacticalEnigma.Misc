@@ -10,6 +10,11 @@ namespace DidacticalEnigma.Updater.CLI
     {
         public static async Task Main(string[] args)
         {
+            var g = new GitHubAtomReleasesChannelUpdater(
+                "https://github.com/milleniumbug/DidacticalEnigma/releases.atom");
+            var info = await g.CheckForUpdate(new Version(0, 9, 6));
+            ;
+            
             var dataDirectory = args.ElementAtOrDefault(0) ?? "/home/milleniumbug/dokumenty/PROJEKTY/InDevelopment/DidacticalEnigma/Data";
             var httpClient = new HttpClient();
 

@@ -1,33 +1,24 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
-using DidacticalEnigma.Project;
+using System.Threading.Tasks;
 using MagicTranslatorProject.Context;
 using MagicTranslatorProjectMemImporter.MemApi;
 using MagicTranslatorProjectMemImporter.MemApi.Models;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 
-namespace MagicTranslatorProjectMemImporter
+namespace MemImporter
 {
-    class Program
+    public class MagicTranslatorProjectImporter
     {
-        static void Main(string[] args)
+        public static async Task Import(IDidacticalEnigmaMem api, string projectName, IReadOnlyList<string> args)
         {
             var projectPath = args[0];
-            var projectName = args[1];
-            var address = args[2];
-
-            Console.WriteLine("Supply an access token (just the token, don't prefix it with \"Bearer\"):");
-            var token = Console.ReadLine();
 
             var imagePaths = new Dictionary<string, Guid>();
             
-            var api = new DidacticalEnigmaMem(new Uri(address));
-            api.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
             if (MagicTranslatorProject.MagicTranslatorProject.Registration.TryOpen(projectPath, out var project, out var failureReason))
             {
                 foreach (var volume in project.Root.Children)
@@ -42,15 +33,15 @@ namespace MagicTranslatorProjectMemImporter
                                 bool isNewImage = imagePaths.TryAdd(page.PathToRaw, Guid.NewGuid());
                                 if (isNewImage)
                                 {
-                                    using var memoryStream = new MemoryStream();
-                                    using var img = Image.Load(page.PathToRaw);
+                                    await using var memoryStream = new MemoryStream();
+                                    using var img = await Image.LoadAsync(page.PathToRaw);
                                     img.Mutate(i =>
                                     {
                                         i.Resize(480, 0);
                                     });
                                         
-                                    img.SaveAsPng(memoryStream);
-                                    api.AddContexts(new AddContextsParams()
+                                    await img.SaveAsPngAsync(memoryStream);
+                                    await api.AddContextsAsync(new AddContextsParams()
                                     {
                                         Contexts = new List<AddContextParams>()
                                         {
@@ -68,7 +59,7 @@ namespace MagicTranslatorProjectMemImporter
                                 });
                             }
 
-                            api.AddTranslations(projectName, new AddTranslationsParams()
+                            await api.AddTranslationsAsync(projectName, new AddTranslationsParams()
                             {
                                 Translations = translations
                             });
@@ -78,7 +69,7 @@ namespace MagicTranslatorProjectMemImporter
             }
             else
             {
-                Console.WriteLine(failureReason);
+                await Console.Error.WriteLineAsync(failureReason);
             }
         }
     }

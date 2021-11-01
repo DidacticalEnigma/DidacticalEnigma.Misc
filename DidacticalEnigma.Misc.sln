@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DidacticalEnigma.CLI.NetCor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DidacticalEnigma.CLI.NetFramework", "DidacticalEnigma.CLI.NetFramework\DidacticalEnigma.CLI.NetFramework.csproj", "{2138B507-6129-4352-97DC-6038F52E9B1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicTranslatorProjectMemImporter", "MagicTranslatorProjectMemImporter\MagicTranslatorProjectMemImporter.csproj", "{617663D7-633E-4B17-8515-CD5CE4F119F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemImporter", "MemImporter\MemImporter.csproj", "{617663D7-633E-4B17-8515-CD5CE4F119F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DidacticalEnigma.Updater", "DidacticalEnigma.Updater\DidacticalEnigma.Updater.csproj", "{CBFB0E52-EAE9-4BB9-8AEF-2FC839E99711}"
 EndProject

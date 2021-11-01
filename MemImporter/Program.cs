@@ -17,7 +17,7 @@ namespace MemImporter
             Console.WriteLine("Supply an access token (just the token, don't prefix it with \"Bearer\"), or press Enter to use without authentication:");
             var token = Console.ReadLine();
             var api = new DidacticalEnigmaMem(new Uri(address));
-            if (string.IsNullOrEmpty(token))
+            if (!string.IsNullOrEmpty(token))
             {
                 api.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }

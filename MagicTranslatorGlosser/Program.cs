@@ -14,7 +14,7 @@ namespace MagicTranslatorGlosser
         public static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
-            RunAutomaticGlossing(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "Data"), args[0]);
+            RunAutomaticGlossing(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data"), args[0]);
         }
         
         private static void RunAutomaticGlossing(string dataDir, string input)

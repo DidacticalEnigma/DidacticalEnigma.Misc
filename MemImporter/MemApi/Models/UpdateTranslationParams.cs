@@ -11,27 +11,27 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class AddTranslationParams
+    public partial class UpdateTranslationParams
     {
         /// <summary>
-        /// Initializes a new instance of the AddTranslationParams class.
+        /// Initializes a new instance of the UpdateTranslationParams class.
         /// </summary>
-        public AddTranslationParams()
+        public UpdateTranslationParams()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AddTranslationParams class.
+        /// Initializes a new instance of the UpdateTranslationParams class.
         /// </summary>
-        public AddTranslationParams(string source = default(string), string target = default(string), string correlationId = default(string), System.Guid? categoryId = default(System.Guid?), AddTranslationNotesParams translationNotes = default(AddTranslationNotesParams), IDictionary<string, object> associatedData = default(IDictionary<string, object>))
+        public UpdateTranslationParams(string source = default(string), string target = default(string), System.Guid? categoryId = default(System.Guid?), UpdateTranslationNotesParams translationNotes = default(UpdateTranslationNotesParams), IDictionary<string, object> associatedData = default(IDictionary<string, object>), System.DateTime? lastQueryTime = default(System.DateTime?))
         {
             Source = source;
             Target = target;
-            CorrelationId = correlationId;
             CategoryId = categoryId;
             TranslationNotes = translationNotes;
             AssociatedData = associatedData;
+            LastQueryTime = lastQueryTime;
             CustomInit();
         }
 
@@ -52,23 +52,23 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "correlationId")]
-        public string CorrelationId { get; set; }
-
-        /// <summary>
-        /// </summary>
         [JsonProperty(PropertyName = "categoryId")]
         public System.Guid? CategoryId { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "translationNotes")]
-        public AddTranslationNotesParams TranslationNotes { get; set; }
+        public UpdateTranslationNotesParams TranslationNotes { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "associatedData")]
         public IDictionary<string, object> AssociatedData { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "lastQueryTime")]
+        public System.DateTime? LastQueryTime { get; set; }
 
     }
 }

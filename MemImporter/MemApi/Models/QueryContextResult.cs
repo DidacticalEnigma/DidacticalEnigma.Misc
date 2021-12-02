@@ -22,11 +22,14 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
         /// <summary>
         /// Initializes a new instance of the QueryContextResult class.
         /// </summary>
-        public QueryContextResult(string text = default(string), byte[] content = default(byte[]), string mediaType = default(string))
+        public QueryContextResult(System.Guid? id = default(System.Guid?), string text = default(string), string correlationId = default(string), string mediaType = default(string), string projectName = default(string), bool? hasData = default(bool?))
         {
+            Id = id;
             Text = text;
-            Content = content;
+            CorrelationId = correlationId;
             MediaType = mediaType;
+            ProjectName = projectName;
+            HasData = hasData;
             CustomInit();
         }
 
@@ -37,18 +40,33 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
 
         /// <summary>
         /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public System.Guid? Id { get; set; }
+
+        /// <summary>
+        /// </summary>
         [JsonProperty(PropertyName = "text")]
         public string Text { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "content")]
-        public byte[] Content { get; set; }
+        [JsonProperty(PropertyName = "correlationId")]
+        public string CorrelationId { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "mediaType")]
         public string MediaType { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "projectName")]
+        public string ProjectName { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "hasData")]
+        public bool? HasData { get; set; }
 
     }
 }

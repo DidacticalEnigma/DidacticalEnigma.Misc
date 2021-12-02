@@ -11,6 +11,7 @@ namespace MagicTranslatorProjectMemImporter.MemApi
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -36,6 +37,94 @@ namespace MagicTranslatorProjectMemImporter.MemApi
 
         /// <param name='projectName'>
         /// </param>
+        /// <param name='body'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> AddCategoriesWithHttpMessagesAsync(string projectName = default(string), AddCategoriesParams body = default(AddCategoriesParams), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='projectName'>
+        /// </param>
+        /// <param name='categoryId'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> DeleteCategoryWithHttpMessagesAsync(string projectName = default(string), System.Guid? categoryId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='projectName'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<QueryCategoriesResult>> GetCategoriesWithHttpMessagesAsync(string projectName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='id'>
+        /// </param>
+        /// <param name='projectName'>
+        /// </param>
+        /// <param name='contentTypeOverride'>
+        /// </param>
+        /// <param name='correlationId'>
+        /// </param>
+        /// <param name='content'>
+        /// </param>
+        /// <param name='text'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> AddContextWithHttpMessagesAsync(string id = default(string), string projectName = default(string), string contentTypeOverride = default(string), string correlationId = default(string), Stream content = default(Stream), string text = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='id'>
+        /// </param>
+        /// <param name='projectId'>
+        /// </param>
+        /// <param name='correlationId'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<QueryContextsResult>> GetContextsWithHttpMessagesAsync(System.Guid? id = default(System.Guid?), string projectId = default(string), string correlationId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='id'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> DeleteContextWithHttpMessagesAsync(System.Guid? id = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='id'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse> GetContextDataWithHttpMessagesAsync(System.Guid? id = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='projectName'>
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -54,6 +143,14 @@ namespace MagicTranslatorProjectMemImporter.MemApi
         /// </param>
         Task<HttpOperationResponse<object>> DeleteProjectWithHttpMessagesAsync(string projectName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<QueryProjectsResult>> ListProjectsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
         /// <param name='projectName'>
         /// </param>
         /// <param name='body'>
@@ -64,7 +161,7 @@ namespace MagicTranslatorProjectMemImporter.MemApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> AddTranslationsWithHttpMessagesAsync(string projectName = default(string), AddTranslationsParams body = default(AddTranslationsParams), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<AddTranslationsResult>> AddTranslationsWithHttpMessagesAsync(string projectName = default(string), AddTranslationsParams body = default(AddTranslationsParams), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='projectName'>
         /// </param>
@@ -72,13 +169,19 @@ namespace MagicTranslatorProjectMemImporter.MemApi
         /// </param>
         /// <param name='query'>
         /// </param>
+        /// <param name='category'>
+        /// </param>
+        /// <param name='paginationToken'>
+        /// </param>
+        /// <param name='limit'>
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<QueryResult>> QueryWithHttpMessagesAsync(string projectName = default(string), string correlationId = default(string), string query = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<QueryTranslationsResult>> QueryWithHttpMessagesAsync(string projectName = default(string), string correlationId = default(string), string query = default(string), string category = default(string), string paginationToken = default(string), int? limit = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='projectName'>
         /// </param>
@@ -92,6 +195,10 @@ namespace MagicTranslatorProjectMemImporter.MemApi
         /// </param>
         Task<HttpOperationResponse<object>> DeleteTranslationWithHttpMessagesAsync(string projectName = default(string), string correlationId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <param name='projectName'>
+        /// </param>
+        /// <param name='correlationId'>
+        /// </param>
         /// <param name='body'>
         /// </param>
         /// <param name='customHeaders'>
@@ -100,27 +207,7 @@ namespace MagicTranslatorProjectMemImporter.MemApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> AddContextsWithHttpMessagesAsync(AddContextsParams body = default(AddContextsParams), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <param name='id'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<QueryContextResult>> GetContextWithHttpMessagesAsync(System.Guid? id = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <param name='id'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<object>> DeleteContextWithHttpMessagesAsync(System.Guid? id = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> UpdateTranslationWithHttpMessagesAsync(string projectName = default(string), string correlationId = default(string), UpdateTranslationParams body = default(UpdateTranslationParams), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

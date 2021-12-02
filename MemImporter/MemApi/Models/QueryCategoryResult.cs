@@ -7,27 +7,25 @@
 namespace MagicTranslatorProjectMemImporter.MemApi.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class AddTranslationsParams
+    public partial class QueryCategoryResult
     {
         /// <summary>
-        /// Initializes a new instance of the AddTranslationsParams class.
+        /// Initializes a new instance of the QueryCategoryResult class.
         /// </summary>
-        public AddTranslationsParams()
+        public QueryCategoryResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AddTranslationsParams class.
+        /// Initializes a new instance of the QueryCategoryResult class.
         /// </summary>
-        public AddTranslationsParams(bool? allowPartialAdd = default(bool?), IList<AddTranslationParams> translations = default(IList<AddTranslationParams>))
+        public QueryCategoryResult(System.Guid? id = default(System.Guid?), string name = default(string))
         {
-            AllowPartialAdd = allowPartialAdd;
-            Translations = translations;
+            Id = id;
+            Name = name;
             CustomInit();
         }
 
@@ -38,13 +36,13 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "allowPartialAdd")]
-        public bool? AllowPartialAdd { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public System.Guid? Id { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "translations")]
-        public IList<AddTranslationParams> Translations { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
     }
 }

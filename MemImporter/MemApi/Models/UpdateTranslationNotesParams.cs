@@ -11,23 +11,25 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class AddTranslationsParams
+    public partial class UpdateTranslationNotesParams
     {
         /// <summary>
-        /// Initializes a new instance of the AddTranslationsParams class.
+        /// Initializes a new instance of the UpdateTranslationNotesParams
+        /// class.
         /// </summary>
-        public AddTranslationsParams()
+        public UpdateTranslationNotesParams()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AddTranslationsParams class.
+        /// Initializes a new instance of the UpdateTranslationNotesParams
+        /// class.
         /// </summary>
-        public AddTranslationsParams(bool? allowPartialAdd = default(bool?), IList<AddTranslationParams> translations = default(IList<AddTranslationParams>))
+        public UpdateTranslationNotesParams(IList<IoNormalNote> normal = default(IList<IoNormalNote>), IList<IoGlossNote> gloss = default(IList<IoGlossNote>))
         {
-            AllowPartialAdd = allowPartialAdd;
-            Translations = translations;
+            Normal = normal;
+            Gloss = gloss;
             CustomInit();
         }
 
@@ -38,13 +40,13 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "allowPartialAdd")]
-        public bool? AllowPartialAdd { get; set; }
+        [JsonProperty(PropertyName = "normal")]
+        public IList<IoNormalNote> Normal { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "translations")]
-        public IList<AddTranslationParams> Translations { get; set; }
+        [JsonProperty(PropertyName = "gloss")]
+        public IList<IoGlossNote> Gloss { get; set; }
 
     }
 }

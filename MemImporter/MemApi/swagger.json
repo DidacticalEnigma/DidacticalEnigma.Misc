@@ -5,10 +5,341 @@
     "version": "v1"
   },
   "paths": {
+    "/mem/categories": {
+      "post": {
+        "tags": [
+          "Categories"
+        ],
+        "operationId": "AddCategories",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "projectName",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/AddCategoriesParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AddCategoriesResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ModifyCategories"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Categories"
+        ],
+        "operationId": "DeleteCategory",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "projectName",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "categoryId",
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/DeleteCategoryResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ModifyCategories"
+            ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "operationId": "GetCategories",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "projectName",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/QueryCategoriesResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ReadTranslations"
+            ]
+          }
+        ]
+      }
+    },
+    "/mem/contexts": {
+      "post": {
+        "tags": [
+          "Contexts"
+        ],
+        "operationId": "AddContext",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "formData",
+            "name": "ProjectName",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "ContentTypeOverride",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "CorrelationId",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "Content",
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "Text",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AddContextResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ModifyContexts"
+            ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Contexts"
+        ],
+        "operationId": "GetContexts",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "query",
+            "name": "projectId",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "correlationId",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/QueryContextsResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ReadContexts"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Contexts"
+        ],
+        "operationId": "DeleteContext",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/DeleteContextResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ModifyContexts"
+            ]
+          }
+        ]
+      }
+    },
+    "/mem/contexts/data": {
+      "get": {
+        "tags": [
+          "Contexts"
+        ],
+        "operationId": "GetContextData",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ReadContexts"
+            ]
+          }
+        ]
+      }
+    },
     "/mem/projects": {
       "post": {
         "tags": [
-          "Mem"
+          "Projects"
         ],
         "operationId": "AddProject",
         "produces": [
@@ -29,12 +360,25 @@
             "schema": {
               "$ref": "#/definitions/AddProjectResult"
             }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ModifyProjects"
+            ]
+          }
+        ]
       },
       "delete": {
         "tags": [
-          "Mem"
+          "Projects"
         ],
         "operationId": "DeleteProject",
         "produces": [
@@ -55,14 +399,59 @@
             "schema": {
               "$ref": "#/definitions/DeleteProjectResult"
             }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ModifyProjects"
+            ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "operationId": "ListProjects",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/QueryProjectsResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "EnumerateProjects"
+            ]
+          }
+        ]
       }
     },
     "/mem/translations": {
       "post": {
         "tags": [
-          "Mem"
+          "Translations"
         ],
         "operationId": "AddTranslations",
         "consumes": [
@@ -95,12 +484,25 @@
             "schema": {
               "$ref": "#/definitions/AddTranslationsResult"
             }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ModifyTranslations"
+            ]
+          }
+        ]
       },
       "get": {
         "tags": [
-          "Mem"
+          "Translations"
         ],
         "operationId": "Query",
         "produces": [
@@ -123,20 +525,49 @@
             "in": "query",
             "name": "query",
             "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "paginationToken",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "responses": {
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/QueryResult"
+              "$ref": "#/definitions/QueryTranslationsResult"
             }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ReadTranslations"
+            ]
+          }
+        ]
       },
       "delete": {
         "tags": [
-          "Mem"
+          "Translations"
         ],
         "operationId": "DeleteTranslation",
         "produces": [
@@ -162,16 +593,27 @@
             "schema": {
               "$ref": "#/definitions/DeleteTranslationResult"
             }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
-        }
-      }
-    },
-    "/mem/contexts": {
-      "post": {
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ModifyTranslations"
+            ]
+          }
+        ]
+      },
+      "patch": {
         "tags": [
-          "Mem"
+          "Translations"
         ],
-        "operationId": "AddContexts",
+        "operationId": "UpdateTranslation",
         "consumes": [
           "application/json",
           "text/json",
@@ -184,10 +626,20 @@
         ],
         "parameters": [
           {
+            "in": "query",
+            "name": "projectName",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "correlationId",
+            "type": "string"
+          },
+          {
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/AddContextsParams"
+              "$ref": "#/definitions/UpdateTranslationParams"
             }
           }
         ],
@@ -195,73 +647,75 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/AddContextsResult"
+              "$ref": "#/definitions/UpdateTranslationResult"
             }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
-        }
-      },
-      "get": {
-        "tags": [
-          "Mem"
-        ],
-        "operationId": "GetContext",
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
+        },
+        "security": [
           {
-            "in": "query",
-            "name": "id",
-            "type": "string",
-            "format": "uuid"
+            "oauth2": [
+              "ModifyTranslations"
+            ]
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/QueryContextResult"
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Mem"
-        ],
-        "operationId": "DeleteContext",
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "id",
-            "type": "string",
-            "format": "uuid"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/DeleteContextResult"
-            }
-          }
-        }
+        ]
       }
     }
   },
   "definitions": {
+    "AddCategoriesParams": {
+      "type": "object",
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AddCategoryParams"
+          }
+        }
+      }
+    },
+    "AddCategoriesResult": {
+      "type": "object"
+    },
+    "AddCategoryParams": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "AddContextResult": {
+      "type": "object"
+    },
     "AddProjectResult": {
       "type": "object"
     },
-    "DeleteProjectResult": {
-      "type": "object"
+    "AddTranslationNotesParams": {
+      "type": "object",
+      "properties": {
+        "normal": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IoNormalNote"
+          }
+        },
+        "gloss": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IoGlossNote"
+          }
+        }
+      }
     },
     "AddTranslationParams": {
       "type": "object",
@@ -275,15 +729,25 @@
         "correlationId": {
           "type": "string"
         },
-        "context": {
+        "categoryId": {
           "format": "uuid",
           "type": "string"
+        },
+        "translationNotes": {
+          "$ref": "#/definitions/AddTranslationNotesParams"
+        },
+        "associatedData": {
+          "type": "object",
+          "additionalProperties": { }
         }
       }
     },
     "AddTranslationsParams": {
       "type": "object",
       "properties": {
+        "allowPartialAdd": {
+          "type": "boolean"
+        },
         "translations": {
           "type": "array",
           "items": {
@@ -293,103 +757,249 @@
       }
     },
     "AddTranslationsResult": {
-      "type": "object"
-    },
-    "QueryTranslationResult": {
       "type": "object",
       "properties": {
-        "projectName": {
-          "type": "string",
-          "readOnly": true
-        },
-        "source": {
-          "type": "string",
-          "readOnly": true
-        },
-        "target": {
-          "type": "string",
-          "readOnly": true
-        },
-        "highlighterSequence": {
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "type": "string",
-          "readOnly": true
-        },
-        "context": {
-          "format": "uuid",
-          "type": "string",
-          "readOnly": true
-        }
-      }
-    },
-    "QueryResult": {
-      "type": "object",
-      "properties": {
-        "translations": {
+        "notAdded": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/QueryTranslationResult"
-          },
-          "readOnly": true
+            "type": "string"
+          }
         }
       }
+    },
+    "DeleteCategoryResult": {
+      "type": "object"
+    },
+    "DeleteContextResult": {
+      "type": "object"
+    },
+    "DeleteProjectResult": {
+      "type": "object"
     },
     "DeleteTranslationResult": {
       "type": "object"
     },
-    "AddContextParams": {
+    "IoGlossNote": {
+      "type": "object",
+      "properties": {
+        "foreign": {
+          "type": "string"
+        },
+        "explanation": {
+          "type": "string"
+        }
+      }
+    },
+    "IoNormalNote": {
+      "type": "object",
+      "properties": {
+        "sideText": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "QueryCategoriesResult": {
+      "type": "object",
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QueryCategoryResult"
+          }
+        }
+      }
+    },
+    "QueryCategoryResult": {
       "type": "object",
       "properties": {
         "id": {
           "format": "uuid",
           "type": "string"
         },
-        "content": {
-          "format": "byte",
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "QueryContextResult": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "correlationId": {
           "type": "string"
         },
         "mediaType": {
           "type": "string"
         },
-        "text": {
+        "projectName": {
           "type": "string"
+        },
+        "hasData": {
+          "type": "boolean"
         }
       }
     },
-    "AddContextsParams": {
+    "QueryContextsResult": {
       "type": "object",
       "properties": {
         "contexts": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/AddContextParams"
+            "$ref": "#/definitions/QueryContextResult"
           }
         }
       }
     },
-    "AddContextsResult": {
-      "type": "object"
-    },
-    "QueryContextResult": {
+    "QueryProjectResult": {
       "type": "object",
       "properties": {
-        "text": {
-          "type": "string"
-        },
-        "content": {
-          "format": "byte",
-          "type": "string"
-        },
-        "mediaType": {
+        "name": {
           "type": "string"
         }
       }
     },
-    "DeleteContextResult": {
+    "QueryProjectsResult": {
+      "type": "object",
+      "properties": {
+        "projects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QueryProjectResult"
+          }
+        }
+      }
+    },
+    "QueryTranslationNotesResult": {
+      "type": "object",
+      "properties": {
+        "normal": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IoNormalNote"
+          }
+        },
+        "gloss": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IoGlossNote"
+          }
+        }
+      }
+    },
+    "QueryTranslationResult": {
+      "type": "object",
+      "properties": {
+        "projectName": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "highlighterSequence": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "categoryId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "correlationId": {
+          "type": "string"
+        },
+        "translationNotes": {
+          "$ref": "#/definitions/QueryTranslationNotesResult"
+        },
+        "associatedData": {
+          "type": "object",
+          "additionalProperties": { }
+        }
+      }
+    },
+    "QueryTranslationsResult": {
+      "type": "object",
+      "properties": {
+        "translations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QueryTranslationResult"
+          }
+        },
+        "paginationToken": {
+          "type": "string"
+        },
+        "queryTime": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "UpdateTranslationNotesParams": {
+      "type": "object",
+      "properties": {
+        "normal": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IoNormalNote"
+          }
+        },
+        "gloss": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IoGlossNote"
+          }
+        }
+      }
+    },
+    "UpdateTranslationParams": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "categoryId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "translationNotes": {
+          "$ref": "#/definitions/UpdateTranslationNotesParams"
+        },
+        "associatedData": {
+          "type": "object",
+          "additionalProperties": { }
+        },
+        "lastQueryTime": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "UpdateTranslationResult": {
       "type": "object"
+    }
+  },
+  "securityDefinitions": {
+    "oauth2": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\""
     }
   }
 }

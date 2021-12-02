@@ -11,23 +11,22 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class AddTranslationsParams
+    public partial class AddTranslationsResult
     {
         /// <summary>
-        /// Initializes a new instance of the AddTranslationsParams class.
+        /// Initializes a new instance of the AddTranslationsResult class.
         /// </summary>
-        public AddTranslationsParams()
+        public AddTranslationsResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AddTranslationsParams class.
+        /// Initializes a new instance of the AddTranslationsResult class.
         /// </summary>
-        public AddTranslationsParams(bool? allowPartialAdd = default(bool?), IList<AddTranslationParams> translations = default(IList<AddTranslationParams>))
+        public AddTranslationsResult(IList<string> notAdded = default(IList<string>))
         {
-            AllowPartialAdd = allowPartialAdd;
-            Translations = translations;
+            NotAdded = notAdded;
             CustomInit();
         }
 
@@ -38,13 +37,8 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "allowPartialAdd")]
-        public bool? AllowPartialAdd { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "translations")]
-        public IList<AddTranslationParams> Translations { get; set; }
+        [JsonProperty(PropertyName = "notAdded")]
+        public IList<string> NotAdded { get; set; }
 
     }
 }

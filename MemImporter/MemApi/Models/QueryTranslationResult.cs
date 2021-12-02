@@ -7,6 +7,8 @@
 namespace MagicTranslatorProjectMemImporter.MemApi.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     public partial class QueryTranslationResult
@@ -22,14 +24,17 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
         /// <summary>
         /// Initializes a new instance of the QueryTranslationResult class.
         /// </summary>
-        public QueryTranslationResult(string projectName = default(string), string source = default(string), string target = default(string), string highlighterSequence = default(string), string correlationId = default(string), System.Guid? context = default(System.Guid?))
+        public QueryTranslationResult(string projectName = default(string), string source = default(string), string target = default(string), string highlighterSequence = default(string), string category = default(string), System.Guid? categoryId = default(System.Guid?), string correlationId = default(string), QueryTranslationNotesResult translationNotes = default(QueryTranslationNotesResult), IDictionary<string, object> associatedData = default(IDictionary<string, object>))
         {
             ProjectName = projectName;
             Source = source;
             Target = target;
             HighlighterSequence = highlighterSequence;
+            Category = category;
+            CategoryId = categoryId;
             CorrelationId = correlationId;
-            Context = context;
+            TranslationNotes = translationNotes;
+            AssociatedData = associatedData;
             CustomInit();
         }
 
@@ -41,32 +46,47 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "projectName")]
-        public string ProjectName { get; private set; }
+        public string ProjectName { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "source")]
-        public string Source { get; private set; }
+        public string Source { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "target")]
-        public string Target { get; private set; }
+        public string Target { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "highlighterSequence")]
-        public string HighlighterSequence { get; private set; }
+        public string HighlighterSequence { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "category")]
+        public string Category { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "categoryId")]
+        public System.Guid? CategoryId { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "correlationId")]
-        public string CorrelationId { get; private set; }
+        public string CorrelationId { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "context")]
-        public System.Guid? Context { get; private set; }
+        [JsonProperty(PropertyName = "translationNotes")]
+        public QueryTranslationNotesResult TranslationNotes { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "associatedData")]
+        public IDictionary<string, object> AssociatedData { get; set; }
 
     }
 }

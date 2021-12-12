@@ -17,44 +17,84 @@ namespace MemImporter
         {
             var projectPath = args[0];
 
-            if (MagicTranslatorProject.MagicTranslatorProject.Registration.TryOpen(projectPath, out var project, out var failureReason))
+            if (MagicTranslatorProject.MagicTranslatorProject.Registration.TryOpen(projectPath, out var rawProject, out var failureReason))
             {
+                var project = (MagicTranslatorProject.MagicTranslatorProject)rawProject;
+
+                var characterDict = project.Root.AllCharacters.ToDictionary(c => c, c => Guid.NewGuid());
+
+                await api.AddCategoriesAsync(projectName, new AddCategoriesParams()
+                {
+                    Categories = characterDict
+                        .Select(kvp => new AddCategoryParams()
+                        {
+                            Id = kvp.Value,
+                            Name = kvp.Key.ToString()
+                        })
+                        .ToList()
+                });
+                
+                var translations = new List<AddTranslationParams>();
                 foreach (var volume in project.Root.Children)
                 {
                     foreach (var chapter in volume.Children)
                     {
-                        foreach (var page in chapter.Children.OfType<PageContext>())
+                        foreach (var page in chapter.Children)
                         {
                             await using var file = File.OpenRead(page.PathToRaw);
                             await api.AddContextAsync(
                                 Guid.NewGuid().ToString(),
                                 projectName,
                                 "image/png",
-                                page.ShortDescription,
+                                page.ReadableIdentifier,
                                 file,
                                 null);
                             
-                            var translations = new List<AddTranslationParams>();
+                            
                             foreach (var capture in page.Children)
                             {
-
+                                var normalizedNotes =
+                                    capture.Translation.Notes
+                                        .Where(n => !string.IsNullOrWhiteSpace(n.Text))
+                                        .Select(n => new IoNormalNote("", n.Text))
+                                        .ToList();
+                                var normalizedGlosses = capture.Translation.Glosses
+                                    .Where(n => !string.IsNullOrWhiteSpace(n.Foreign) || !string.IsNullOrWhiteSpace(n.Text))
+                                    .Select(n => new IoGlossNote(n.Foreign, n.Text))
+                                    .ToList();
+                                var hasNotesOrGlosses = normalizedGlosses.Count != 0 || normalizedNotes.Count != 0;
                                 translations.Add(new AddTranslationParams()
                                 {
-                                    CorrelationId = capture.ShortDescription + " " + Guid.NewGuid().ToString(),
+                                    CorrelationId = capture.ReadableIdentifier,
                                     Source = capture.Translation.OriginalText,
-                                    Target = capture.Translation.TranslatedText,
-                                    TranslationNotes = new AddTranslationNotesParams(
-                                        capture.Translation.Notes.Select(n => new IoNormalNote("", n.Text)).ToList(),
-                                        capture.Translation.Glosses.Select(n => new IoGlossNote(n.Foreign, n.Text)).ToList())
+                                    Target = string.IsNullOrWhiteSpace(capture.Translation.TranslatedText) ? null : capture.Translation.TranslatedText,
+                                    CategoryId = characterDict[capture.Character],
+                                    TranslationNotes = hasNotesOrGlosses
+                                        ? new AddTranslationNotesParams(
+                                            capture.Translation.Notes.Select(n => new IoNormalNote(n.SideText, n.Text)).ToList(),
+                                            capture.Translation.Glosses.Select(n => new IoGlossNote(n.Foreign, n.Text)).ToList())
+                                        : null
                                 });
                             }
 
-                            await api.AddTranslationsAsync(projectName, new AddTranslationsParams()
+                            if (translations.Count > 100)
                             {
-                                Translations = translations
-                            });
+                                await api.AddTranslationsAsync(projectName, new AddTranslationsParams()
+                                {
+                                    Translations = translations
+                                });
+                                translations.Clear();
+                            }
                         }
                     }
+                }
+                if (translations.Count > 0)
+                {
+                    await api.AddTranslationsAsync(projectName, new AddTranslationsParams()
+                    {
+                        Translations = translations
+                    });
+                    translations.Clear();
                 }
             }
             else

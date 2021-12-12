@@ -24,6 +24,9 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
         /// <summary>
         /// Initializes a new instance of the AddTranslationsParams class.
         /// </summary>
+        /// <param name="allowPartialAdd">Controls whether to add translations
+        /// if only a part of them could be inserted (because the correlation
+        /// ids of others are already added for the project)</param>
         public AddTranslationsParams(bool? allowPartialAdd = default(bool?), IList<AddTranslationParams> translations = default(IList<AddTranslationParams>))
         {
             AllowPartialAdd = allowPartialAdd;
@@ -37,6 +40,9 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets controls whether to add translations if only a part of
+        /// them could be inserted (because the correlation ids of others are
+        /// already added for the project)
         /// </summary>
         [JsonProperty(PropertyName = "allowPartialAdd")]
         public bool? AllowPartialAdd { get; set; }

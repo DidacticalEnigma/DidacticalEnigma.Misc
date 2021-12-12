@@ -7,9 +7,9 @@
 
     <ItemGroup>
         <PackageReference Include="DidacticalEnigma.Core" Version="0.9.7.2" />
-        <PackageReference Include="DidacticalEnigma.MagicTranslatorProject" Version="0.9.6.4" />
+        <PackageReference Include="DidacticalEnigma.MagicTranslatorProject" Version="0.9.7.2" />
         <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.23" />
-        <PackageReference Include="SixLabors.ImageSharp" Version="1.0.1" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
     </ItemGroup>
 
 </Project>

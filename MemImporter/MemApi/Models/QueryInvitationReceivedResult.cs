@@ -9,24 +9,25 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class QueryProjectResult
+    public partial class QueryInvitationReceivedResult
     {
         /// <summary>
-        /// Initializes a new instance of the QueryProjectResult class.
+        /// Initializes a new instance of the QueryInvitationReceivedResult
+        /// class.
         /// </summary>
-        public QueryProjectResult()
+        public QueryInvitationReceivedResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the QueryProjectResult class.
+        /// Initializes a new instance of the QueryInvitationReceivedResult
+        /// class.
         /// </summary>
-        public QueryProjectResult(string name = default(string), string owner = default(string), bool? canContribute = default(bool?))
+        public QueryInvitationReceivedResult(string projectName = default(string), string invitingUser = default(string))
         {
-            Name = name;
-            Owner = owner;
-            CanContribute = canContribute;
+            ProjectName = projectName;
+            InvitingUser = invitingUser;
             CustomInit();
         }
 
@@ -37,18 +38,13 @@ namespace MagicTranslatorProjectMemImporter.MemApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "projectName")]
+        public string ProjectName { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "owner")]
-        public string Owner { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "canContribute")]
-        public bool? CanContribute { get; set; }
+        [JsonProperty(PropertyName = "invitingUser")]
+        public string InvitingUser { get; set; }
 
     }
 }

@@ -2,6 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "DidacticalEnigma.Mem",
+    "description": "Simple translation memory server\n\nA single project contains many translation units, each one has source text and target text, and may have an associated context with it. Context stores a piece of textual or binary data, or both.\n\nEach translation unit has a correlation id, which can store an identifier, unique to the project, which can be used to correlate a specific translation unit with an external resource or database.",
     "version": "v1"
   },
   "paths": {
@@ -52,7 +53,7 @@
         "security": [
           {
             "oauth2": [
-              "ModifyCategories"
+              "ApiRejectAnonymous"
             ]
           }
         ]
@@ -97,7 +98,7 @@
         "security": [
           {
             "oauth2": [
-              "ModifyCategories"
+              "ApiRejectAnonymous"
             ]
           }
         ]
@@ -136,7 +137,7 @@
         "security": [
           {
             "oauth2": [
-              "ReadTranslations"
+              "ApiAllowAnonymous"
             ]
           }
         ]
@@ -206,7 +207,7 @@
         "security": [
           {
             "oauth2": [
-              "ModifyContexts"
+              "ApiRejectAnonymous"
             ]
           }
         ]
@@ -256,7 +257,7 @@
         "security": [
           {
             "oauth2": [
-              "ReadContexts"
+              "ApiAllowAnonymous"
             ]
           }
         ]
@@ -277,6 +278,11 @@
             "name": "id",
             "type": "string",
             "format": "uuid"
+          },
+          {
+            "in": "query",
+            "name": "projectName",
+            "type": "string"
           }
         ],
         "responses": {
@@ -296,7 +302,7 @@
         "security": [
           {
             "oauth2": [
-              "ModifyContexts"
+              "ApiRejectAnonymous"
             ]
           }
         ]
@@ -330,7 +336,282 @@
         "security": [
           {
             "oauth2": [
-              "ReadContexts"
+              "ApiAllowAnonymous"
+            ]
+          }
+        ]
+      }
+    },
+    "/mem/projects/invitations/accept": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "operationId": "AcceptInvitation",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/AcceptInvitationParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AcceptInvitationResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ApiRejectAnonymous"
+            ]
+          }
+        ]
+      }
+    },
+    "/mem/projects/invitations/reject": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "operationId": "RejectInvitation",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/RejectInvitationParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/RejectInvitationResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ApiRejectAnonymous"
+            ]
+          }
+        ]
+      }
+    },
+    "/mem/projects/invitations/cancel": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "operationId": "CancelInvitation",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/CancelInvitationParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CancelInvitationResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ApiRejectAnonymous"
+            ]
+          }
+        ]
+      }
+    },
+    "/mem/projects/invitations": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "operationId": "SendInvitation",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "projectName",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/SendInvitationParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SendInvitationResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ApiRejectAnonymous"
+            ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "operationId": "QueryInvitations",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/QueryInvitationsResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ApiRejectAnonymous"
+            ]
+          }
+        ]
+      }
+    },
+    "/mem/projects/contributors": {
+      "delete": {
+        "tags": [
+          "Projects"
+        ],
+        "operationId": "RemoveContributor",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "projectName",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "contributorName",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/RemoveContributorResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "ApiRejectAnonymous"
             ]
           }
         ]
@@ -352,6 +633,11 @@
             "in": "query",
             "name": "projectName",
             "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "publicallyReadable",
+            "type": "boolean"
           }
         ],
         "responses": {
@@ -371,7 +657,7 @@
         "security": [
           {
             "oauth2": [
-              "ModifyProjects"
+              "ApiRejectAnonymous"
             ]
           }
         ]
@@ -410,7 +696,7 @@
         "security": [
           {
             "oauth2": [
-              "ModifyProjects"
+              "ApiRejectAnonymous"
             ]
           }
         ]
@@ -442,7 +728,7 @@
         "security": [
           {
             "oauth2": [
-              "EnumerateProjects"
+              "ApiAllowAnonymous"
             ]
           }
         ]
@@ -495,7 +781,7 @@
         "security": [
           {
             "oauth2": [
-              "ModifyTranslations"
+              "ApiRejectAnonymous"
             ]
           }
         ]
@@ -504,6 +790,7 @@
         "tags": [
           "Translations"
         ],
+        "summary": "Query for translations",
         "operationId": "Query",
         "produces": [
           "text/plain",
@@ -514,31 +801,37 @@
           {
             "in": "query",
             "name": "projectName",
+            "description": "The name of the project",
             "type": "string"
           },
           {
             "in": "query",
             "name": "correlationId",
+            "description": "The prefix of the correlation id",
             "type": "string"
           },
           {
             "in": "query",
             "name": "query",
+            "description": "Search query",
             "type": "string"
           },
           {
             "in": "query",
             "name": "category",
+            "description": "Translation category",
             "type": "string"
           },
           {
             "in": "query",
             "name": "paginationToken",
+            "description": "A pagination token that was returned from the previous query with the same set of parameters",
             "type": "string"
           },
           {
             "in": "query",
             "name": "limit",
+            "description": "How many translations should be returned? Values above 250 are treated as if 250 was passed.",
             "type": "integer",
             "format": "int32"
           }
@@ -560,7 +853,7 @@
         "security": [
           {
             "oauth2": [
-              "ReadTranslations"
+              "ApiAllowAnonymous"
             ]
           }
         ]
@@ -604,7 +897,7 @@
         "security": [
           {
             "oauth2": [
-              "ModifyTranslations"
+              "ApiRejectAnonymous"
             ]
           }
         ]
@@ -660,7 +953,7 @@
         "security": [
           {
             "oauth2": [
-              "ModifyTranslations"
+              "ApiRejectAnonymous"
             ]
           }
         ]
@@ -668,6 +961,20 @@
     }
   },
   "definitions": {
+    "AcceptInvitationParams": {
+      "type": "object",
+      "properties": {
+        "invitingUserName": {
+          "type": "string"
+        },
+        "projectName": {
+          "type": "string"
+        }
+      }
+    },
+    "AcceptInvitationResult": {
+      "type": "object"
+    },
     "AddCategoriesParams": {
       "type": "object",
       "properties": {
@@ -746,6 +1053,7 @@
       "type": "object",
       "properties": {
         "allowPartialAdd": {
+          "description": "Controls whether to add translations if only a part of them could be inserted (because the correlation ids of others are already added for the project)",
           "type": "boolean"
         },
         "translations": {
@@ -766,6 +1074,20 @@
           }
         }
       }
+    },
+    "CancelInvitationParams": {
+      "type": "object",
+      "properties": {
+        "invitedUserName": {
+          "type": "string"
+        },
+        "projectName": {
+          "type": "string"
+        }
+      }
+    },
+    "CancelInvitationResult": {
+      "type": "object"
     },
     "DeleteCategoryResult": {
       "type": "object"
@@ -859,11 +1181,56 @@
         }
       }
     },
+    "QueryInvitationReceivedResult": {
+      "type": "object",
+      "properties": {
+        "projectName": {
+          "type": "string"
+        },
+        "invitingUser": {
+          "type": "string"
+        }
+      }
+    },
+    "QueryInvitationSentResult": {
+      "type": "object",
+      "properties": {
+        "projectName": {
+          "type": "string"
+        },
+        "invitedUser": {
+          "type": "string"
+        }
+      }
+    },
+    "QueryInvitationsResult": {
+      "type": "object",
+      "properties": {
+        "invitationsPending": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QueryInvitationSentResult"
+          }
+        },
+        "invitationsReceived": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QueryInvitationReceivedResult"
+          }
+        }
+      }
+    },
     "QueryProjectResult": {
       "type": "object",
       "properties": {
         "name": {
           "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "canContribute": {
+          "type": "boolean"
         }
       }
     },
@@ -946,6 +1313,34 @@
           "type": "string"
         }
       }
+    },
+    "RejectInvitationParams": {
+      "type": "object",
+      "properties": {
+        "invitingUserName": {
+          "type": "string"
+        },
+        "projectName": {
+          "type": "string"
+        }
+      }
+    },
+    "RejectInvitationResult": {
+      "type": "object"
+    },
+    "RemoveContributorResult": {
+      "type": "object"
+    },
+    "SendInvitationParams": {
+      "type": "object",
+      "properties": {
+        "invitedUserName": {
+          "type": "string"
+        }
+      }
+    },
+    "SendInvitationResult": {
+      "type": "object"
     },
     "UpdateTranslationNotesParams": {
       "type": "object",

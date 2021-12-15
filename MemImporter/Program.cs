@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using MagicTranslatorProjectMemImporter.MemApi;
+using DidacticalEnigma.Mem.Client.MemApi;
 
 namespace MemImporter
 {

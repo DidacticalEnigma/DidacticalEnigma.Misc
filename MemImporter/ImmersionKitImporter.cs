@@ -3,8 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using JDict.ImmersionKit;
-using MagicTranslatorProjectMemImporter.MemApi;
-using MagicTranslatorProjectMemImporter.MemApi.Models;
+using DidacticalEnigma.Mem.Client.MemApi;
+using DidacticalEnigma.Mem.Client.MemApi.Models;
 using Newtonsoft.Json;
 
 namespace MemImporter

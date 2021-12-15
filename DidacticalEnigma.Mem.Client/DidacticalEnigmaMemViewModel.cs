@@ -20,13 +20,14 @@ public class DidacticalEnigmaMemViewModel : INotifyPropertyChanged, IDisposable
     private readonly string clientId;
     private readonly List<string> additionalScopes;
     private string? refreshToken = null;
+    private bool isSet;
     private bool isLoggedIn;
+    private bool isLoggingIn;
     private string? verificationUri;
     private string? errorMessage;
     private string? userCode;
     private string? uri;
     private readonly RelayCommand initialize;
-    private bool isLoggingIn;
     private readonly RelayCommand reset;
     private readonly RelayCommand logIn;
     private readonly RelayCommand logOut;
@@ -35,18 +36,19 @@ public class DidacticalEnigmaMemViewModel : INotifyPropertyChanged, IDisposable
     {
         this.clientId = clientId ?? "DidacticalEnigma";
         this.additionalScopes = (additionalScopes ?? Enumerable.Empty<string>()).ToList();
-        this.initialize = new RelayCommand(() =>
-        {
-            var apiClient = new DidacticalEnigmaMem(new Uri(uri ?? throw new InvalidOperationException()));
-            this.httpClient = apiClient.HttpClient;
-            Client = apiClient;
-        }, () => uri != null && !IsLoggedIn && !IsLoggingIn);
-        this.reset = new RelayCommand(
-            ResetAction,
-            () => !IsLoggedIn && !IsLoggingIn);
-        this.logIn = new RelayCommand(LogInMethod, () => !IsLoggedIn && !IsLoggingIn);
-        this.logOut = new RelayCommand(LogOutMethod, () => IsLoggedIn);
+        this.initialize = new RelayCommand(InitializeMethod, () => uri != null && !IsSet && !IsLoggedIn && !IsLoggingIn);
+        this.reset = new RelayCommand(ResetMethod, () => IsSet && !IsLoggedIn && !IsLoggingIn);
+        this.logIn = new RelayCommand(LogInMethod, () => IsSet && !IsLoggedIn && !IsLoggingIn);
+        this.logOut = new RelayCommand(LogOutMethod, () => IsSet && IsLoggedIn);
         ClientAccessor = () => this.Client;
+    }
+
+    private void InitializeMethod()
+    {
+        var apiClient = new DidacticalEnigmaMem(new Uri(uri ?? throw new InvalidOperationException()));
+        this.httpClient = apiClient.HttpClient;
+        Client = apiClient;
+        IsSet = true;
     }
 
     private async void LogOutMethod()
@@ -59,11 +61,12 @@ public class DidacticalEnigmaMemViewModel : INotifyPropertyChanged, IDisposable
         await this.TryLogin();
     }
 
-    private async void ResetAction()
+    private async void ResetMethod()
     {
         await this.TryLogout();
         this.Dispose();
         ErrorMessage = null;
+        IsSet = false;
     }
 
     public string? Uri
@@ -71,7 +74,7 @@ public class DidacticalEnigmaMemViewModel : INotifyPropertyChanged, IDisposable
         get => uri;
         set
         {
-            if (uri != value)
+            if (uri == value)
                 return;
             uri = value;
             OnPropertyChanged();
@@ -79,23 +82,38 @@ public class DidacticalEnigmaMemViewModel : INotifyPropertyChanged, IDisposable
     }
 
     public ICommand Initialize => initialize;
-    
-    public ICommand Reset => initialize;
-    
+
+    public ICommand Reset => reset;
+
     public ICommand LogIn => logIn;
-    
+
     public ICommand LogOut => logOut;
 
     public IDidacticalEnigmaMem? Client { get; private set; }
 
     public Func<IDidacticalEnigmaMem?> ClientAccessor { get; }
 
+    public bool IsNotSet => !IsSet;
+
+    public bool IsSet
+    {
+        get => isSet;
+        private set
+        {
+            if (isSet == value)
+                return;
+            isSet = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(IsNotSet));
+        }
+    }
+
     public bool IsLoggingIn
     {
         get => isLoggingIn;
         private set
         {
-            if (isLoggingIn != value)
+            if (isLoggingIn == value)
                 return;
             isLoggingIn = value;
             OnPropertyChanged();
@@ -107,7 +125,7 @@ public class DidacticalEnigmaMemViewModel : INotifyPropertyChanged, IDisposable
         get => userCode;
         private set
         {
-            if (userCode != value)
+            if (userCode == value)
                 return;
             userCode = value;
             OnPropertyChanged();
@@ -119,7 +137,7 @@ public class DidacticalEnigmaMemViewModel : INotifyPropertyChanged, IDisposable
         get => verificationUri;
         private set
         {
-            if (verificationUri != value)
+            if (verificationUri == value)
                 return;
             verificationUri = value;
             OnPropertyChanged();
@@ -131,7 +149,7 @@ public class DidacticalEnigmaMemViewModel : INotifyPropertyChanged, IDisposable
         get => isLoggedIn;
         private set
         {
-            if (isLoggedIn != value)
+            if (isLoggedIn == value)
                 return;
             isLoggedIn = value;
             OnPropertyChanged();
@@ -143,7 +161,7 @@ public class DidacticalEnigmaMemViewModel : INotifyPropertyChanged, IDisposable
         get => errorMessage;
         private set
         {
-            if (errorMessage != value)
+            if (errorMessage == value)
                 return;
             errorMessage = value;
             OnPropertyChanged();
@@ -160,7 +178,7 @@ public class DidacticalEnigmaMemViewModel : INotifyPropertyChanged, IDisposable
         }
 
         var deviceResponse = await this.httpClient.RequestDeviceAuthorizationAsync(new DeviceAuthorizationRequest
-        { 
+        {
             Address = discovery.DeviceAuthorizationEndpoint,
             Scope = string.Join(" ", additionalScopes.Concat(new string[]
             {
@@ -209,12 +227,12 @@ public class DidacticalEnigmaMemViewModel : INotifyPropertyChanged, IDisposable
             }
         }
         while (true);
-        
-        IsLoggedIn = true;
+
         UserCode = null;
         VerificationUri = null;
         ErrorMessage = null;
         IsLoggingIn = false;
+        IsLoggedIn = true;
         return true;
     }
 

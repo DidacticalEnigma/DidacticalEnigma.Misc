@@ -122,6 +122,9 @@ public class DidacticalEnigmaMemViewModel : INotifyPropertyChanged, IDisposable
         }
     }
 
+    public string? Prompt =>
+        UserCode != null ? $"The code is {UserCode}. Follow the link to continue authorization process:" : null;
+
     public string? UserCode
     {
         get => userCode;
@@ -131,6 +134,7 @@ public class DidacticalEnigmaMemViewModel : INotifyPropertyChanged, IDisposable
                 return;
             userCode = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(Prompt));
         }
     }
 

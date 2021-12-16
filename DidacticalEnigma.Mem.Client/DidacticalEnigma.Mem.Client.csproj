@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
-        <PackageVersion>0.9.0.2</PackageVersion>
+        <PackageVersion>0.9.0.4</PackageVersion>
         <Authors>milleniumbug</Authors>
     </PropertyGroup>
     

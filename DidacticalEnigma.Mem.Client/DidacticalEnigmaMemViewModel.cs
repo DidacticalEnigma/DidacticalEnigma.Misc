@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using DidacticalEnigma.Mem.Client.MemApi;
 using IdentityModel.Client;
+using Optional;
+using Optional.Unsafe;
 using Utility.Utils;
 
 namespace DidacticalEnigma.Mem.Client;
@@ -36,7 +38,7 @@ public class DidacticalEnigmaMemViewModel : INotifyPropertyChanged, IDisposable
     {
         this.clientId = clientId ?? "DidacticalEnigma";
         this.additionalScopes = (additionalScopes ?? Enumerable.Empty<string>()).ToList();
-        this.initialize = new RelayCommand(InitializeMethod, () => uri != null && !IsSet && !IsLoggedIn && !IsLoggingIn);
+        this.initialize = new RelayCommand(InitializeMethod, () => !string.IsNullOrWhiteSpace(uri) && !IsSet && !IsLoggedIn && !IsLoggingIn);
         this.reset = new RelayCommand(ResetMethod, () => IsSet && !IsLoggedIn && !IsLoggingIn);
         this.logIn = new RelayCommand(LogInMethod, () => IsSet && !IsLoggedIn && !IsLoggingIn);
         this.logOut = new RelayCommand(LogOutMethod, () => IsSet && IsLoggedIn);
@@ -170,70 +172,51 @@ public class DidacticalEnigmaMemViewModel : INotifyPropertyChanged, IDisposable
 
     public async Task<bool> TryLogin(CancellationToken cancellationToken = default)
     {
-        var discovery = await this.httpClient.GetDiscoveryDocumentAsync(uri.ToString(), cancellationToken: cancellationToken);
-        if (discovery.IsError)
+        var resultOpt = await httpClient.StartDeviceCodeLoginProcess(
+            new Uri(uri),
+            clientId,
+            additionalScopes,
+            cancellationToken);
+
+        if (resultOpt.HasValue)
         {
-            ErrorMessage = discovery.Error;
+            var result = resultOpt.ValueOrFailure();
+            IsLoggingIn = true;
+            VerificationUri = result.VerificationUriComplete.ToString();
+            UserCode = result.UserCode;
+
+            var processResultOpt = await result.ProcessResultTask;
+
+            return processResultOpt.Match(
+                processResult =>
+                {
+                    httpClient.DefaultRequestHeaders.Authorization =
+                        new AuthenticationHeaderValue("Bearer", processResult.AccessToken);
+                    UserCode = null;
+                    VerificationUri = null;
+                    ErrorMessage = null;
+                    IsLoggingIn = false;
+                    IsLoggedIn = true;
+                    refreshToken = processResult.RefreshToken;
+                    return true;
+                },
+                err =>
+                {
+                    ErrorMessage = err;
+                    UserCode = null;
+                    VerificationUri = null;
+                    IsLoggingIn = false;
+                    return false;
+                });
+        }
+        else
+        {
+            resultOpt.MatchNone(err =>
+            {
+                ErrorMessage = err;
+            });
             return false;
         }
-
-        var deviceResponse = await this.httpClient.RequestDeviceAuthorizationAsync(new DeviceAuthorizationRequest
-        {
-            Address = discovery.DeviceAuthorizationEndpoint,
-            Scope = string.Join(" ", additionalScopes.Concat(new string[]
-            {
-                "openid",
-                "offline_access",
-                "profile",
-                "email"
-            })),
-            ClientId = clientId
-        }, cancellationToken: cancellationToken);
-        if (deviceResponse.IsError)
-        {
-            ErrorMessage = deviceResponse.Error;
-            return false;
-        }
-
-        IsLoggingIn = true;
-        VerificationUri = deviceResponse.VerificationUriComplete;
-        UserCode = deviceResponse.UserCode;
-
-        do
-        {
-            var tokenResponse = await httpClient.RequestDeviceTokenAsync(new DeviceTokenRequest
-            {
-                Address = discovery.TokenEndpoint,
-                ClientId = clientId,
-                DeviceCode = deviceResponse.DeviceCode
-            }, cancellationToken);
-            cancellationToken.ThrowIfCancellationRequested();
-
-            if (tokenResponse is { IsError: true, Error: "authorization_pending" })
-            {
-                await Task.Delay(Math.Clamp(deviceResponse.Interval, 1, 60) * 1000, cancellationToken);
-                cancellationToken.ThrowIfCancellationRequested();
-            }
-            else if (tokenResponse.IsError)
-            {
-                ErrorMessage = tokenResponse.Error;
-                return false;
-            }
-            else
-            {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenResponse.AccessToken);
-                refreshToken = tokenResponse.RefreshToken;
-                break;
-            }
-        }
-        while (true);
-
-        UserCode = null;
-        VerificationUri = null;
-        ErrorMessage = null;
-        IsLoggingIn = false;
-        IsLoggedIn = true;
-        return true;
     }
 
     public async Task<bool> TryLogout()

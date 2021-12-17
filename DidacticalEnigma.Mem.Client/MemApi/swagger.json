@@ -320,6 +320,12 @@
             "name": "id",
             "type": "string",
             "format": "uuid"
+          },
+          {
+            "in": "query",
+            "name": "ifModifiedSinceOverride",
+            "type": "string",
+            "format": "date-time"
           }
         ],
         "responses": {
@@ -833,7 +839,15 @@
             "name": "limit",
             "description": "How many translations should be returned? Values above 250 are treated as if 250 was passed.",
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "default": 50
+          },
+          {
+            "in": "query",
+            "name": "translatedOnly",
+            "description": "Return only the sentences which have corresponding translations",
+            "type": "boolean",
+            "default": false
           }
         ],
         "responses": {

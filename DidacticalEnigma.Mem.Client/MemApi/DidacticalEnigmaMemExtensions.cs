@@ -217,9 +217,11 @@ namespace DidacticalEnigma.Mem.Client.MemApi
             /// </param>
             /// <param name='id'>
             /// </param>
-            public static void GetContextData(this IDidacticalEnigmaMem operations, System.Guid? id = default(System.Guid?))
+            /// <param name='ifModifiedSinceOverride'>
+            /// </param>
+            public static void GetContextData(this IDidacticalEnigmaMem operations, System.Guid? id = default(System.Guid?), System.DateTime? ifModifiedSinceOverride = default(System.DateTime?))
             {
-                operations.GetContextDataAsync(id).GetAwaiter().GetResult();
+                operations.GetContextDataAsync(id, ifModifiedSinceOverride).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -227,12 +229,14 @@ namespace DidacticalEnigma.Mem.Client.MemApi
             /// </param>
             /// <param name='id'>
             /// </param>
+            /// <param name='ifModifiedSinceOverride'>
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task GetContextDataAsync(this IDidacticalEnigmaMem operations, System.Guid? id = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task GetContextDataAsync(this IDidacticalEnigmaMem operations, System.Guid? id = default(System.Guid?), System.DateTime? ifModifiedSinceOverride = default(System.DateTime?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.GetContextDataWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.GetContextDataWithHttpMessagesAsync(id, ifModifiedSinceOverride, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <param name='operations'>
@@ -529,9 +533,12 @@ namespace DidacticalEnigma.Mem.Client.MemApi
             /// How many translations should be returned? Values above 250 are treated as
             /// if 250 was passed.
             /// </param>
-            public static QueryTranslationsResult Query(this IDidacticalEnigmaMem operations, string projectName = default(string), string correlationId = default(string), string query = default(string), string category = default(string), string paginationToken = default(string), int? limit = default(int?))
+            /// <param name='translatedOnly'>
+            /// Return only the sentences which have corresponding translations
+            /// </param>
+            public static QueryTranslationsResult Query(this IDidacticalEnigmaMem operations, string projectName = default(string), string correlationId = default(string), string query = default(string), string category = default(string), string paginationToken = default(string), int? limit = 50, bool? translatedOnly = false)
             {
-                return operations.QueryAsync(projectName, correlationId, query, category, paginationToken, limit).GetAwaiter().GetResult();
+                return operations.QueryAsync(projectName, correlationId, query, category, paginationToken, limit, translatedOnly).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -560,12 +567,15 @@ namespace DidacticalEnigma.Mem.Client.MemApi
             /// How many translations should be returned? Values above 250 are treated as
             /// if 250 was passed.
             /// </param>
+            /// <param name='translatedOnly'>
+            /// Return only the sentences which have corresponding translations
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<QueryTranslationsResult> QueryAsync(this IDidacticalEnigmaMem operations, string projectName = default(string), string correlationId = default(string), string query = default(string), string category = default(string), string paginationToken = default(string), int? limit = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<QueryTranslationsResult> QueryAsync(this IDidacticalEnigmaMem operations, string projectName = default(string), string correlationId = default(string), string query = default(string), string category = default(string), string paginationToken = default(string), int? limit = 50, bool? translatedOnly = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.QueryWithHttpMessagesAsync(projectName, correlationId, query, category, paginationToken, limit, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.QueryWithHttpMessagesAsync(projectName, correlationId, query, category, paginationToken, limit, translatedOnly, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

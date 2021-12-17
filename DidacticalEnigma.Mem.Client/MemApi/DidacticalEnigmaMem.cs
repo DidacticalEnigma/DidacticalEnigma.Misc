@@ -1035,6 +1035,8 @@ namespace DidacticalEnigma.Mem.Client.MemApi
 
         /// <param name='id'>
         /// </param>
+        /// <param name='ifModifiedSinceOverride'>
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1047,7 +1049,7 @@ namespace DidacticalEnigma.Mem.Client.MemApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> GetContextDataWithHttpMessagesAsync(System.Guid? id = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> GetContextDataWithHttpMessagesAsync(System.Guid? id = default(System.Guid?), System.DateTime? ifModifiedSinceOverride = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1057,6 +1059,7 @@ namespace DidacticalEnigma.Mem.Client.MemApi
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("id", id);
+                tracingParameters.Add("ifModifiedSinceOverride", ifModifiedSinceOverride);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetContextData", tracingParameters);
             }
@@ -1067,6 +1070,10 @@ namespace DidacticalEnigma.Mem.Client.MemApi
             if (id != null)
             {
                 _queryParameters.Add(string.Format("id={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(id, SerializationSettings).Trim('"'))));
+            }
+            if (ifModifiedSinceOverride != null)
+            {
+                _queryParameters.Add(string.Format("ifModifiedSinceOverride={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(ifModifiedSinceOverride, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2453,6 +2460,9 @@ namespace DidacticalEnigma.Mem.Client.MemApi
         /// How many translations should be returned? Values above 250 are treated as
         /// if 250 was passed.
         /// </param>
+        /// <param name='translatedOnly'>
+        /// Return only the sentences which have corresponding translations
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -2468,7 +2478,7 @@ namespace DidacticalEnigma.Mem.Client.MemApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<QueryTranslationsResult>> QueryWithHttpMessagesAsync(string projectName = default(string), string correlationId = default(string), string query = default(string), string category = default(string), string paginationToken = default(string), int? limit = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<QueryTranslationsResult>> QueryWithHttpMessagesAsync(string projectName = default(string), string correlationId = default(string), string query = default(string), string category = default(string), string paginationToken = default(string), int? limit = 50, bool? translatedOnly = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2483,6 +2493,7 @@ namespace DidacticalEnigma.Mem.Client.MemApi
                 tracingParameters.Add("category", category);
                 tracingParameters.Add("paginationToken", paginationToken);
                 tracingParameters.Add("limit", limit);
+                tracingParameters.Add("translatedOnly", translatedOnly);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Query", tracingParameters);
             }
@@ -2513,6 +2524,10 @@ namespace DidacticalEnigma.Mem.Client.MemApi
             if (limit != null)
             {
                 _queryParameters.Add(string.Format("limit={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(limit, SerializationSettings).Trim('"'))));
+            }
+            if (translatedOnly != null)
+            {
+                _queryParameters.Add(string.Format("translatedOnly={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(translatedOnly, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {

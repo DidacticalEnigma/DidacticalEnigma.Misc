@@ -126,13 +126,15 @@ namespace DidacticalEnigma.Mem.Client.MemApi
 
         /// <param name='id'>
         /// </param>
+        /// <param name='ifModifiedSinceOverride'>
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse> GetContextDataWithHttpMessagesAsync(System.Guid? id = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> GetContextDataWithHttpMessagesAsync(System.Guid? id = default(System.Guid?), System.DateTime? ifModifiedSinceOverride = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='body'>
         /// </param>
@@ -261,13 +263,16 @@ namespace DidacticalEnigma.Mem.Client.MemApi
         /// How many translations should be returned? Values above 250 are
         /// treated as if 250 was passed.
         /// </param>
+        /// <param name='translatedOnly'>
+        /// Return only the sentences which have corresponding translations
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<QueryTranslationsResult>> QueryWithHttpMessagesAsync(string projectName = default(string), string correlationId = default(string), string query = default(string), string category = default(string), string paginationToken = default(string), int? limit = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<QueryTranslationsResult>> QueryWithHttpMessagesAsync(string projectName = default(string), string correlationId = default(string), string query = default(string), string category = default(string), string paginationToken = default(string), int? limit = 50, bool? translatedOnly = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='projectName'>
         /// </param>

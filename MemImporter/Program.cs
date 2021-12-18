@@ -1,8 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using DidacticalEnigma.Mem.Client;
 using DidacticalEnigma.Mem.Client.MemApi;
+using Optional.Unsafe;
 
 namespace MemImporter
 {
@@ -13,13 +16,41 @@ namespace MemImporter
             var importerName = args[0];
             var address = args[1];
             var projectName = args[2];
+
+            var uri = new Uri(address);
+            var clientId = "MemImporter";
             
-            Console.WriteLine("Supply an access token (just the token, don't prefix it with \"Bearer\"), or press Enter to use without authentication:");
-            var token = Console.ReadLine();
-            var api = new DidacticalEnigmaMem(new Uri(address));
-            if (!string.IsNullOrEmpty(token))
+            var api = new DidacticalEnigmaMem(uri);
+            var httpClient = api.HttpClient;
+
+            var loginProcess = await httpClient.StartDeviceCodeLoginProcess(
+                uri,
+                clientId);
+
+            if (!loginProcess.HasValue)
             {
-                api.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                loginProcess.MatchNone(error => { Console.WriteLine(error); });
+                return;
+            }
+
+            var loginProcessResult = loginProcess.ValueOrFailure();
+            Console.WriteLine(
+                $"The code is {loginProcessResult.UserCode}. Visit {loginProcessResult.VerificationUriComplete} to authenticate.");
+
+            var resultOpt = await loginProcessResult.ProcessResultTask;
+            
+            if (!resultOpt.HasValue)
+            {
+                resultOpt.MatchNone(error => { Console.WriteLine(error); });
+                return;
+            }
+
+            var result = resultOpt.ValueOrFailure();
+
+            if (!string.IsNullOrEmpty(result.AccessToken))
+            {
+                api.HttpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", result.AccessToken);
             }
 
             switch (importerName)
@@ -31,6 +62,7 @@ namespace MemImporter
                     await ImmersionKitImporter.Import(api, projectName, args.Skip(3).ToList());
                     break;
             }
+
         }
     }
 }

@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using DidacticalEnigma.Core.Models.LanguageService;
+using NMeCab;
 
 namespace DidacticalEnigma.Updater.CLI
 {
@@ -17,6 +19,12 @@ namespace DidacticalEnigma.Updater.CLI
             
             var dataDirectory = args.ElementAtOrDefault(0) ?? "/home/milleniumbug/dokumenty/PROJEKTY/InDevelopment/DidacticalEnigma/Data";
             var httpClient = new HttpClient();
+
+            using var mecab = new MeCabIpadic(new MeCabParam
+            {
+                DicDir = Path.Combine(dataDirectory, "mecab", "ipadic"),
+                UseMemoryMappedFile = true
+            });
 
             var updater1 = new JMDictUpdaterProcess(
                 httpClient,
@@ -49,12 +57,24 @@ namespace DidacticalEnigma.Updater.CLI
                 Path.Combine(dataDirectory, "character", "kanjidic2.xml.gz.new"));
 
             updater3.OnUpdateStatusChange += UpdaterStatusUpdate(updater3.Name);
+            
+            var updater4 = new TanakaUpdaterProcess(
+                httpClient,
+                "http://ftp.edrdg.org/pub/Nihongo/examples.utf.gz",
+                Path.Combine(dataDirectory, "corpora", "examples.utf.gz"),
+                Path.Combine(dataDirectory, "corpora", "examples.utf.gz.new"),
+                Path.Combine(dataDirectory, "corpora", "tanaka.cache"),
+                Path.Combine(dataDirectory, "corpora", "tanaka.cache.new"),
+                mecab);
+
+            updater4.OnUpdateStatusChange += UpdaterStatusUpdate(updater4.Name);
 
             var task1 = updater1.Execute();
             var task2 = updater2.Execute();
             var task3 = updater3.Execute();
+            var task4 = updater4.Execute();
 
-            await Task.WhenAll(task1, task2, task3);
+            await Task.WhenAll(task1, task2, task3, task4);
         }
 
         private static Action<UpdateStatus> UpdaterStatusUpdate(string name)

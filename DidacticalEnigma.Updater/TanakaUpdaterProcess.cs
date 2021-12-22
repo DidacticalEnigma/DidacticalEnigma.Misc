@@ -57,11 +57,14 @@ public class TanakaUpdaterProcess : UpdaterProcess
 
         try
         {
-            var tanaka = new Tanaka(newPath, Encoding.UTF8);
-            using (var corpus = new Corpus(tanaka.AllSentences, analyzer, newCachePath))
+            await Task.Run(() =>
             {
-            
-            }
+                var tanaka = new Tanaka(newPath, Encoding.UTF8);
+                using (var corpus = new Corpus(tanaka.AllSentences, analyzer, newCachePath))
+                {
+
+                }
+            });
 
             File.Delete(oldPath);
             File.Move(newPath, oldPath);

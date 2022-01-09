@@ -1,24 +1,22 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace DidacticalEnigma.SugoiTranslatorOfflineClient;
+namespace DidacticalEnigma.SugoiSuite;
 
-public class TranslationClient
+public class SugoiOfflineTranslatorClient
 {
     private readonly HttpClient client;
 
-    public TranslationClient(HttpClient client)
+    public SugoiOfflineTranslatorClient(HttpClient client)
     {
         this.client = client;
     }
 
     public async Task<string> GetTranslation(string source)
     {
-        var response = await this.client.PostAsJsonAsync("/", new TranslationRequest()
-        {
-            Message = "translate sentences",
-            Content = source
-        });
+        var response = await this.client.PostAsJsonAsync("/", new Request(
+            message: "translate sentences",
+            content: source));
         response.EnsureSuccessStatusCode();
         var result = JsonSerializer.Deserialize<string>(await response.Content.ReadAsStreamAsync())
             ?? throw new JsonException();

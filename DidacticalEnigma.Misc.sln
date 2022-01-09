@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DidacticalEnigma.Mem.Client
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DidacticalEnigma.Mem.DataSource", "DidacticalEnigma.Mem.DataSource\DidacticalEnigma.Mem.DataSource.csproj", "{59F49711-E805-45C6-9343-EC2E39C80C1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DidacticalEnigma.SugoiTranslatorOfflineClient", "DidacticalEnigma.SugoiTranslatorOfflineClient\DidacticalEnigma.SugoiTranslatorOfflineClient.csproj", "{96DBBB47-EF9E-486D-8CB3-F2A1BA2B8B1F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DidacticalEnigma.SugoiSuite", "DidacticalEnigma.SugoiSuite\DidacticalEnigma.SugoiSuite.csproj", "{96DBBB47-EF9E-486D-8CB3-F2A1BA2B8B1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

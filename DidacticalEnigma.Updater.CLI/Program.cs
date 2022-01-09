@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using DidacticalEnigma.Core.Models.LanguageService;
+using JetBrains.Annotations;
 using NMeCab;
 
 namespace DidacticalEnigma.Updater.CLI
@@ -12,12 +13,7 @@ namespace DidacticalEnigma.Updater.CLI
     {
         public static async Task Main(string[] args)
         {
-            var g = new GitHubAtomReleasesChannelUpdater(
-                "https://github.com/milleniumbug/DidacticalEnigma/releases.atom");
-            var info = await g.CheckForUpdate(new Version(0, 9, 6));
-            ;
-            
-            var dataDirectory = args.ElementAtOrDefault(0) ?? "/home/milleniumbug/dokumenty/PROJEKTY/InDevelopment/DidacticalEnigma/Data";
+            var dataDirectory = GetDataDirectory(args.ElementAtOrDefault(0));
             var httpClient = new HttpClient();
 
             using var mecab = new MeCabIpadic(new MeCabParam
@@ -37,7 +33,6 @@ namespace DidacticalEnigma.Updater.CLI
 
             updater1.OnUpdateStatusChange += UpdaterStatusUpdate(updater1.Name);
 
-            
             var updater2 = new JMNedictUpdaterProcess(
                 httpClient,
                 "http://ftp.edrdg.org/pub/Nihongo/JMnedict.xml.gz",
@@ -114,6 +109,13 @@ namespace DidacticalEnigma.Updater.CLI
                         throw new ArgumentOutOfRangeException(nameof(status));
                 }
             };
+        }
+        
+        public static string GetDataDirectory([CanBeNull] string dataDir)
+        {
+            return string.IsNullOrWhiteSpace(dataDir)
+                ? Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data")
+                : dataDir;
         }
     }
 }

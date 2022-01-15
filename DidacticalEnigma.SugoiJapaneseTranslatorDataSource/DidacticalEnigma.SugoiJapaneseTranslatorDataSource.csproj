@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PackageVersion>0.1.0</PackageVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\DidacticalEnigma.SugoiSuite\DidacticalEnigma.SugoiSuite.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="DidacticalEnigma.Core" Version="0.9.7.15" />
+      <PackageReference Include="DidacticalEnigma.IoCModule" Version="0.9.3.3" />
+    </ItemGroup>
+
+</Project>

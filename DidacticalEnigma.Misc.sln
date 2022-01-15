@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DidacticalEnigma.Mem.DataSo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DidacticalEnigma.SugoiSuite", "DidacticalEnigma.SugoiSuite\DidacticalEnigma.SugoiSuite.csproj", "{96DBBB47-EF9E-486D-8CB3-F2A1BA2B8B1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DidacticalEnigma.SugoiJapaneseTranslatorDataSource", "DidacticalEnigma.SugoiJapaneseTranslatorDataSource\DidacticalEnigma.SugoiJapaneseTranslatorDataSource.csproj", "{7BBA5585-26F7-4741-BCFD-7EA42F2F06DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -156,5 +158,17 @@ Global
 		{96DBBB47-EF9E-486D-8CB3-F2A1BA2B8B1F}.Release|x64.Build.0 = Release|Any CPU
 		{96DBBB47-EF9E-486D-8CB3-F2A1BA2B8B1F}.Release|x86.ActiveCfg = Release|Any CPU
 		{96DBBB47-EF9E-486D-8CB3-F2A1BA2B8B1F}.Release|x86.Build.0 = Release|Any CPU
+		{7BBA5585-26F7-4741-BCFD-7EA42F2F06DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BBA5585-26F7-4741-BCFD-7EA42F2F06DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BBA5585-26F7-4741-BCFD-7EA42F2F06DB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7BBA5585-26F7-4741-BCFD-7EA42F2F06DB}.Debug|x64.Build.0 = Debug|Any CPU
+		{7BBA5585-26F7-4741-BCFD-7EA42F2F06DB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7BBA5585-26F7-4741-BCFD-7EA42F2F06DB}.Debug|x86.Build.0 = Debug|Any CPU
+		{7BBA5585-26F7-4741-BCFD-7EA42F2F06DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BBA5585-26F7-4741-BCFD-7EA42F2F06DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BBA5585-26F7-4741-BCFD-7EA42F2F06DB}.Release|x64.ActiveCfg = Release|Any CPU
+		{7BBA5585-26F7-4741-BCFD-7EA42F2F06DB}.Release|x64.Build.0 = Release|Any CPU
+		{7BBA5585-26F7-4741-BCFD-7EA42F2F06DB}.Release|x86.ActiveCfg = Release|Any CPU
+		{7BBA5585-26F7-4741-BCFD-7EA42F2F06DB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

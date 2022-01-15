@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
         <AssemblyName>DidacticalEnigma.SugoiSuite</AssemblyName>
         <RootNamespace>DidacticalEnigma.SugoiSuite</RootNamespace>
+        <PackageVersion>0.1.0</PackageVersion>
     </PropertyGroup>
 
 </Project>

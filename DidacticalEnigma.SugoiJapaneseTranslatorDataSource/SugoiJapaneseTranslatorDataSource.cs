@@ -31,7 +31,7 @@ public class SugoiJapaneseTranslatorDataSource : IDataSource
 
     public async Task<Option<RichFormatting>> Answer(Request request, CancellationToken token)
     {
-        var text = request.AllText();
+        var text = request.AllText().ReplaceLineEndings("");
         return (await cache.GetAsync(text, Translate(text, token), token)).Some();
     }
 

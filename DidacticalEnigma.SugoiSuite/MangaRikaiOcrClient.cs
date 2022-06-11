@@ -25,7 +25,7 @@ public class MangaRikaiOcrClient
                 await pngFile.CopyToAsync(targetFile);
             }
 
-            var response = await this.client.PostAsJsonAsync("/", new Request(
+            var response = await this.client.PostAsJsonAsync("/", new Request<string>(
                 message: "detect all textboxes",
                 content: "no content"));
             response.EnsureSuccessStatusCode();

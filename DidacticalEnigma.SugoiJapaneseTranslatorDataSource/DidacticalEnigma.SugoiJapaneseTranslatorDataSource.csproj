@@ -12,8 +12,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="DidacticalEnigma.Core" Version="0.9.7.15" />
-      <PackageReference Include="DidacticalEnigma.IoCModule" Version="0.9.3.3" />
+      <PackageReference Include="DidacticalEnigma.Core" Version="0.9.7.17" />
+      <PackageReference Include="DidacticalEnigma.IoCModule" Version="0.9.3.4" />
     </ItemGroup>
 
 </Project>

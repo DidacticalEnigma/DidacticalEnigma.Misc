@@ -23,7 +23,7 @@ namespace MagicTranslatorGlosser
             using (var mecab = new MeCabIpadic(new MeCabParam { DicDir = Path.Combine(dataDir, "mecab", "ipadic"), UseMemoryMappedFile = true }))
             using (var dict = JMDictLookup.Create(Path.Combine(dataDir, "dictionaries", "JMdict_e.gz"), Path.Combine(dataDir, "dictionaries", "JMdict_e.cache")))
             {
-                var parser = new SentenceParser(mecab, dict);
+                var parser = new SentenceParser(mecab, dict, kana);
                 var glosser = new AutoGlosserNext(parser, dict, kana);
                 var glosses = glosser.Gloss(input);
                 var jsonWriter = new JsonTextWriter(Console.Out);

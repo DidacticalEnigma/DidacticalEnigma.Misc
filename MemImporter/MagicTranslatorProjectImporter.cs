@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using MagicTranslatorProject.Context;
 using DidacticalEnigma.Mem.Client.MemApi;
@@ -16,32 +17,82 @@ namespace MemImporter
         public static async Task Import(IDidacticalEnigmaMem api, string projectName, IReadOnlyList<string> args)
         {
             var projectPath = args[0];
+            var isInitRaw = args.ElementAtOrDefault(1);
+            var identifer = args.ElementAtOrDefault(2);
+            bool isInit = bool.Parse(isInitRaw);
+            var subcomponentsCount = identifer?.Split("/", StringSplitOptions.RemoveEmptyEntries).Length ?? 0;
+            if (subcomponentsCount != 1 && subcomponentsCount != 2)
+            {
+                throw new ArgumentException("identifier is invalid");
+            }
 
             if (MagicTranslatorProject.MagicTranslatorProject.Registration.TryOpen(projectPath, out var rawProject, out var failureReason))
             {
                 var project = (MagicTranslatorProject.MagicTranslatorProject)rawProject;
 
-                var characterDict = project.Root.AllCharacters.ToDictionary(c => c, c => Guid.NewGuid());
+                Dictionary<CharacterType, Guid> characterDict;
 
-                await api.AddCategoriesAsync(projectName, new AddCategoriesParams()
+                if (isInit)
                 {
-                    Categories = characterDict
-                        .Select(kvp => new AddCategoryParams()
-                        {
-                            Id = kvp.Value,
-                            Name = kvp.Key.ToString()
-                        })
-                        .ToList()
-                });
-                
+                    characterDict = project.Root.AllCharacters.ToDictionary(c => c, c => Guid.NewGuid());
+
+                    await api.AddCategoriesAsync(projectName, new AddCategoriesParams()
+                    {
+                        Categories = characterDict
+                            .Select(kvp => new AddCategoryParams()
+                            {
+                                Id = kvp.Value,
+                                Name = kvp.Key.ToString()
+                            })
+                            .ToList()
+                    });
+                }
+                else
+                {
+                    var categoriesResponse = await api.GetCategoriesWithHttpMessagesAsync(projectName);
+                    characterDict = project.Root.AllCharacters
+                        .Join(
+                            categoriesResponse.Body.Categories,
+                            ch => ch.ToString(),
+                            cat => cat.Name,
+                            (ch, cat) => KeyValuePair.Create(ch, cat.Id.Value))
+                        .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                }
+
                 var translations = new List<AddTranslationParams>();
                 foreach (var volume in project.Root.Children)
                 {
+                    if (subcomponentsCount == 1)
+                    {
+                        if (identifer != volume.ReadableIdentifier)
+                        {
+                            Console.WriteLine($"Ignoring volume to upload: {volume.ReadableIdentifier}");
+                            continue;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Matched volume to upload: {volume.ReadableIdentifier}");
+                        }
+                    }
+
                     foreach (var chapter in volume.Children)
                     {
+                        if (subcomponentsCount == 2)
+                        {
+                            if (identifer != chapter.ReadableIdentifier)
+                            {
+                                Console.WriteLine($"Ignoring chapter to upload: {chapter.ReadableIdentifier}");
+                                continue;
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Matched chapter to upload: {chapter.ReadableIdentifier}");
+                            }
+                        }
+
                         foreach (var page in chapter.Children)
                         {
-                            await using var file = File.OpenRead(page.PathToRaw);
+                            await using var file = File.OpenRead(Path.Combine(projectPath, page.PathToRaw));
                             await api.AddContextAsync(
                                 Guid.NewGuid().ToString(),
                                 projectName,

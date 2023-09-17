@@ -32,7 +32,30 @@ public class SugoiJapaneseTranslatorDataSource : IDataSource
     public async Task<Option<RichFormatting>> Answer(Request request, CancellationToken token)
     {
         var text = request.AllText().ReplaceLineEndings("");
-        return (await cache.GetAsync(text, Translate(text, token), token)).Some();
+        try
+        {
+            return (await cache.GetAsync(text, Translate(text, token), token)).Some();
+        }
+        catch (HttpRequestException ex)
+        {
+            var r = new RichFormatting();
+            
+            r.Paragraphs.Add(new TextParagraph(
+                new Text[]
+                {
+                    new Text("ERROR: ", emphasis: true),
+                    new Text("Cannot connect to Sugoi Japanese Translator."),
+                }));
+            
+            r.Paragraphs.Add(new TextParagraph(
+                new Text[]
+                {
+                    new Text("More details as follows:\n", emphasis: true),
+                    new Text(ex.Message),
+                }));
+
+            return r.Some();
+        }
     }
 
     private Func<Task<RichFormatting>> Translate(string text, CancellationToken token)

@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DidacticalEnigma.LibreTrans
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DidacticalEnigma.LibreTranslateDataSource", "DidacticalEnigma.LibreTranslateDataSource\DidacticalEnigma.LibreTranslateDataSource.csproj", "{565C3CE0-4496-4181-9434-3472291B2913}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DidacticalEnigma.OCRAggregatorClient", "DidacticalEnigma.OCRAggregatorClient\DidacticalEnigma.OCRAggregatorClient.csproj", "{D36B8379-CFAB-4A8E-9D51-A67A0EBBFAEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -240,5 +242,17 @@ Global
 		{565C3CE0-4496-4181-9434-3472291B2913}.Release|x64.Build.0 = Release|Any CPU
 		{565C3CE0-4496-4181-9434-3472291B2913}.Release|x86.ActiveCfg = Release|Any CPU
 		{565C3CE0-4496-4181-9434-3472291B2913}.Release|x86.Build.0 = Release|Any CPU
+		{D36B8379-CFAB-4A8E-9D51-A67A0EBBFAEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D36B8379-CFAB-4A8E-9D51-A67A0EBBFAEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D36B8379-CFAB-4A8E-9D51-A67A0EBBFAEF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D36B8379-CFAB-4A8E-9D51-A67A0EBBFAEF}.Debug|x64.Build.0 = Debug|Any CPU
+		{D36B8379-CFAB-4A8E-9D51-A67A0EBBFAEF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D36B8379-CFAB-4A8E-9D51-A67A0EBBFAEF}.Debug|x86.Build.0 = Debug|Any CPU
+		{D36B8379-CFAB-4A8E-9D51-A67A0EBBFAEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D36B8379-CFAB-4A8E-9D51-A67A0EBBFAEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D36B8379-CFAB-4A8E-9D51-A67A0EBBFAEF}.Release|x64.ActiveCfg = Release|Any CPU
+		{D36B8379-CFAB-4A8E-9D51-A67A0EBBFAEF}.Release|x64.Build.0 = Release|Any CPU
+		{D36B8379-CFAB-4A8E-9D51-A67A0EBBFAEF}.Release|x86.ActiveCfg = Release|Any CPU
+		{D36B8379-CFAB-4A8E-9D51-A67A0EBBFAEF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
